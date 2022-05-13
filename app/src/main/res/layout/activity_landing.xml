@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Landing">
+
+    <Button
+        android:background="@color/transparent"
+        android:id="@+id/signInBtn"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/roboto"
+        android:gravity="right"
+        android:text="Sign In"
+        android:layout_alignParentRight="true"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/landingImage"
+        android:layout_width="match_parent"
+        android:layout_height="361dp"
+        android:layout_below="@id/signInBtn"
+        android:src="@drawable/landingpageimage" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:textSize="36dp"
+        android:text="Pet Reunion"
+        android:textColor="?attr/colorSecondary"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:layout_below="@id/landingImage"
+        android:fontFamily="@font/nunito" />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="-1dp"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="Post and exchange information of your \n lost or found pets "
+        android:textColor="?attr/colorPrimary"
+        android:textSize="20dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signUpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:fontFamily="@font/roboto"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Sign Up"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:cornerRadius="10dp" />
+
+
+</RelativeLayout>
