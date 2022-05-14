@@ -1,4 +1,4 @@
-# COMP4521 project 
+# COMP4521 project : PetReunion
 
 ## Background Information
 
@@ -15,10 +15,10 @@ with their beloved owners. The main feature of the app utilizes the connections 
 owners and pet finders and social media sharing, which provides an efficient solution for pet
 owners to trace their missing pets.
 
-# Project/Package name
+## Project/Package name
 com.example.gp18
 
-# Emulator Spec.
+## Emulator Spec.
 Emulator Device: <br>
 Name: Pixel_3a_API_32_arm64-v8a<br>
 API level: 32<br>
@@ -26,5 +26,5 @@ Resoluation: 1080 x 2220<br>
 dp: 393 x 808<br>
 Size on Disk: 2.2 GB
 
-# Prerequisites
+## Prerequisites
 - Please put the credential google-services.json under ./app/
