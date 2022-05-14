@@ -63,6 +63,7 @@
         android:background="@drawable/edittext"
         android:hint="Password"
         android:padding="12dp" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signInBtn"
         android:layout_width="wrap_content"
@@ -77,5 +78,17 @@
         android:textAllCaps="false"
         android:textSize="20dp"
         app:cornerRadius="10dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarLogin"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="182dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="53dp"
+        android:layout_toStartOf="@+id/signInBtn" />
 
 </RelativeLayout>
