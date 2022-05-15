@@ -78,6 +78,7 @@ public class Login extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                             // TODO: Move to next page
+                            goProfileActivity();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -92,6 +93,10 @@ public class Login extends AppCompatActivity {
 
     public void goLandingActivity() {
         Intent intent = new Intent(this, Landing.class);
+        startActivity(intent);
+    }
+    public void goProfileActivity() {
+        Intent intent = new Intent(this, Main.class);
         startActivity(intent);
     }
     private void reload() { }

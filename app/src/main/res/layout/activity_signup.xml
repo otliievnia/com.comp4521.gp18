@@ -51,6 +51,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/edittext"
         android:hint="Name"
+        android:inputType="text"
         android:padding="12dp" />
 
     <EditText
@@ -64,6 +65,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/edittext"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         android:padding="12dp" />
 
     <EditText
@@ -77,6 +79,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/edittext"
         android:hint="Password"
+        android:inputType="textPassword"
         android:padding="12dp" />
 
     <EditText
@@ -90,6 +93,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/edittext"
         android:hint="Confirm Password"
+        android:inputType="textPassword"
         android:padding="12dp" />
 
     <com.google.android.material.button.MaterialButton

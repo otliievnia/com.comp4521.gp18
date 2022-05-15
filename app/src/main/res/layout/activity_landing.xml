@@ -39,6 +39,7 @@
         android:layout_margin="10dp"
         android:layout_below="@id/landingImage"
         android:fontFamily="@font/nunito" />
+
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
