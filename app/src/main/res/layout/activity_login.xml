@@ -51,7 +51,8 @@
         android:background="@drawable/edittext"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:padding="12dp" />
+        android:padding="12dp"
+        android:text="alex23woo@gmail.com"/>
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
@@ -64,7 +65,8 @@
         android:background="@drawable/edittext"
         android:hint="Password"
         android:inputType="textPassword"
-        android:padding="12dp" />
+        android:padding="12dp"
+        android:text="123123"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signInBtn"

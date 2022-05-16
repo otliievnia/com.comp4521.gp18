@@ -3,22 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_add_post.xml" value="0.1" />
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_login.xml" value="0.22916666666666666" />
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_signup.xml" value="0.4" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/fragment_create_posts.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/fragment_missing_pets.xml" value="0.24003623188405798" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/post_info_row_layout.xml" value="0.309375" />
         <entry key="app/src/main/res/drawable/edittext.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/shadow.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/shadow_background.xml" value="0.15118066406250003" />
-        <entry key="app/src/main/res/drawable/stray_pets_icon.xml" value="0.2395" />
-        <entry key="app/src/main/res/drawable/topbar_background.xml" value="0.2395" />
         <entry key="app/src/main/res/layout/activity_landing.xml" value="0.10010070800781257" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.13078308105468753" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3340471092077088" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.10219879150390626" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.17291666666666666" />
-        <entry key="app/src/main/res/layout/fragment_create_posts.xml" value="0.14266304347826086" />
-        <entry key="app/src/main/res/layout/fragment_missing_pets.xml" value="0.14266304347826086" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.231927490234375" />
-        <entry key="app/src/main/res/layout/fragment_stray_pets.xml" value="0.14266304347826086" />
-        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.23697916666666666" />
       </map>
     </option>
   </component>

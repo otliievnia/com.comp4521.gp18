@@ -2,11 +2,17 @@ package com.example.comp4521;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.comp4521.R;
+import com.example.comp4521.databinding.FragmentMissingPetsBinding;
+import com.example.comp4521.viewmodel.PostListViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +20,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MissingPets extends Fragment {
+    PostListViewModel postListViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,10 +62,26 @@ public class MissingPets extends Fragment {
         }
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        postListViewModel.removeListener();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_missing_pets, container, false);
+        FragmentMissingPetsBinding binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_missing_pets, container, false);
+        View view = binding.getRoot();
+
+        // TODO: uncomment below code to continue integration, The first "this" is not match between activity and fragment
+        //postListViewModel = new PostListViewModel(this, binding);
+        postListViewModel.setActionBar();
+        postListViewModel.init();
+        //return inflater.inflate(R.layout.fragment_missing_pets, container, false);
+        return view;
     }
 }
