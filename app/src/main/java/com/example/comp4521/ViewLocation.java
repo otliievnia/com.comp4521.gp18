@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,7 +24,7 @@ import java.io.Serializable;
 
 public class ViewLocation extends FragmentActivity {
     private Post post;
-        private Button backbtn;
+    private Button backbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +39,14 @@ public class ViewLocation extends FragmentActivity {
                 LatLng latLng = new LatLng(post.getGpsLatitude(), post.getGpsLongitude());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.missing_marker));
+                Log.v("missing", post.getMissingOrStray());
+                if (post.getMissingOrStray().equals("missing")) {
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.missing_marker));
+                } else {
+                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.stray_marker));
+                }
                 googleMap.addMarker(markerOptions);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18));
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
             }
         });
 
@@ -55,7 +61,7 @@ public class ViewLocation extends FragmentActivity {
 
     public void goPostDetail() {
         Intent intent = new Intent(this, PostDetail.class);
-        intent.putExtra("post", (Serializable)post);
+        intent.putExtra("post", (Serializable) post);
         startActivity(intent);
     }
 }

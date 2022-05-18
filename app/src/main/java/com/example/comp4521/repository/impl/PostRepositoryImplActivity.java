@@ -1,6 +1,7 @@
 package com.example.comp4521.repository.impl;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,14 +28,14 @@ import static com.example.comp4521.firebase.FirebaseDatabaseReference.DATABASE;
 
 import androidx.fragment.app.Fragment;
 
-public class PostRepositoryImpl extends FirebaseRepository implements PostRepository {
+public class PostRepositoryImplActivity extends FirebaseRepository implements PostRepository {
     private ProgressDialogClass progressDialog;
-    private Fragment fragment;
+    private Activity activity;
     private DatabaseReference postDatabaseReference;
 
-    public PostRepositoryImpl(Fragment fragment) {
-        this.fragment = fragment;
-        progressDialog = new ProgressDialogClass(fragment.getActivity());
+    public PostRepositoryImplActivity(Activity activity) {
+        this.activity = activity;
+        progressDialog = new ProgressDialogClass(activity);
         postDatabaseReference = DATABASE.getReference(POST_TABLE);
     }
 
@@ -303,6 +304,6 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     private String getString(int id) {
-        return fragment.getString(id);
+        return activity.getString(id);
     }
 }

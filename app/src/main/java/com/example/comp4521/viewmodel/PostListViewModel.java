@@ -8,6 +8,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comp4521.MissingPets;
 import com.example.comp4521.PostDetail;
 import com.example.comp4521.R;
+import com.example.comp4521.StrayPets;
 import com.example.comp4521.callback.FirebaseChildCallBack;
 import com.example.comp4521.databinding.FragmentMissingPetsBinding;
+import com.example.comp4521.databinding.FragmentStrayPetsBinding;
 import com.example.comp4521.firebase.FirebaseRequestModel;
 import com.example.comp4521.firebase.FirebaseUtility;
 import com.example.comp4521.helper.IndexedLinkedHashMap;
@@ -49,18 +53,25 @@ import java.util.List;
 public class PostListViewModel {
     private static final String TAG = "PostListViewModel";
     private FragmentMissingPetsBinding fragmentMissingPetsBinding;
-    private MissingPets missingPetsFragment;
+    private FragmentStrayPetsBinding fragmentStrayPetsBinding;
+    private Fragment fragment;
     public PostDetailsAdapter postDetailsAdapter;
     private PostRepository postRepository;
     private FirebaseRequestModel firebaseRequestModel;
     private ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
     private String missingOrStray;
 
-    public PostListViewModel(MissingPets missingPetsFragment, FragmentMissingPetsBinding fragmentMissingPetsBinding, String missingOrStray) {
-        this.fragmentMissingPetsBinding = fragmentMissingPetsBinding;
-        this.missingPetsFragment = missingPetsFragment;
+    public PostListViewModel(Fragment fragment, ViewDataBinding binding, String missingOrStray) {
         this.missingOrStray = missingOrStray;
-        postRepository = new PostRepositoryImpl(missingPetsFragment);
+        if (this.missingOrStray.equals("missing")) {
+            this.fragment = (MissingPets) fragment;
+            this.fragmentMissingPetsBinding = (FragmentMissingPetsBinding) binding;
+            postRepository = new PostRepositoryImpl(this.fragment);
+        } else {
+            this.fragment = (StrayPets) fragment;
+            this.fragmentStrayPetsBinding = (FragmentStrayPetsBinding) binding;
+            postRepository = new PostRepositoryImpl(this.fragment);
+        }
     }
 
 
@@ -72,12 +83,20 @@ public class PostListViewModel {
     private void setAdapter(IndexedLinkedHashMap<String, Post> postIndexedLinkedHashMap) {
         Log.w(TAG, "start to do setAdapter()");
         if (postDetailsAdapter == null) {
-            postDetailsAdapter = new PostDetailsAdapter(missingPetsFragment, postIndexedLinkedHashMap);
-            fragmentMissingPetsBinding.rvEmployeeList.setHasFixedSize(true);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(missingPetsFragment.getActivity());
-            fragmentMissingPetsBinding.rvEmployeeList.setLayoutManager(mLayoutManager);
-            fragmentMissingPetsBinding.rvEmployeeList.setItemAnimator(new DefaultItemAnimator());
-            fragmentMissingPetsBinding.rvEmployeeList.setAdapter(postDetailsAdapter);
+            postDetailsAdapter = new PostDetailsAdapter(fragment, postIndexedLinkedHashMap);
+            if (missingOrStray.equals("missing")) {
+                fragmentMissingPetsBinding.rvEmployeeList.setHasFixedSize(true);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(fragment.getActivity());
+                fragmentMissingPetsBinding.rvEmployeeList.setLayoutManager(mLayoutManager);
+                fragmentMissingPetsBinding.rvEmployeeList.setItemAnimator(new DefaultItemAnimator());
+                fragmentMissingPetsBinding.rvEmployeeList.setAdapter(postDetailsAdapter);
+            } else {
+                fragmentStrayPetsBinding.rvEmployeeList.setHasFixedSize(true);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(fragment.getActivity());
+                fragmentStrayPetsBinding.rvEmployeeList.setLayoutManager(mLayoutManager);
+                fragmentStrayPetsBinding.rvEmployeeList.setItemAnimator(new DefaultItemAnimator());
+                fragmentStrayPetsBinding.rvEmployeeList.setAdapter(postDetailsAdapter);
+            }
         } else {
             postDetailsAdapter.reloadList(postIndexedLinkedHashMap);
         }
@@ -93,15 +112,15 @@ public class PostListViewModel {
             public void onChildAdded(Object object) {
                 if (object != null) {
                     Post post = (Post) object;
-                    Log.w(TAG, "getAllPosts(); post Similarity is:"+post.getSimilarity());
-                    if (!post.getMissingOrStray().equals(missingOrStray)){
+                    Log.w(TAG, "getAllPosts(); post Similarity is:" + post.getSimilarity());
+                    if (!post.getMissingOrStray().equals(missingOrStray)) {
                         return;
                     }
                     if (postDetailsAdapter == null)
                         setAdapter(new IndexedLinkedHashMap<String, Post>());
                     postDetailsAdapter.getPostList().add(post.getPostID(), post);
                     postDetailsAdapter.reloadList(postDetailsAdapter.getPostList().size() - 1, ADD);
-                    SupportMapFragment supportMapFragment = (SupportMapFragment) missingPetsFragment.getChildFragmentManager().findFragmentById(R.id.map_fragment);
+                    SupportMapFragment supportMapFragment = (SupportMapFragment) fragment.getChildFragmentManager().findFragmentById(R.id.map_fragment);
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -109,7 +128,11 @@ public class PostListViewModel {
                             LatLng latLng = new LatLng(post.getGpsLatitude(), post.getGpsLongitude());
                             MarkerOptions markerOptions = new MarkerOptions();
                             markerOptions.position(latLng);
-                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.missing_marker));
+                            if (missingOrStray.equals("missing")) {
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.missing_marker));
+                            } else {
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.stray_marker));
+                            }
                             Marker marker = googleMap.addMarker(markerOptions);
                             marker.setTag(post.getPostID());
                             mMarkerArray.add(marker);
@@ -117,7 +140,7 @@ public class PostListViewModel {
                             googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                 @Override
                                 public boolean onMarkerClick(@NonNull Marker marker) {
-                                    Intent intent = new Intent(missingPetsFragment.getActivity(), PostDetail.class);
+                                    Intent intent = new Intent(fragment.getActivity(), PostDetail.class);
                                     IndexedLinkedHashMap<String, Post> postList = postDetailsAdapter.getPostList();
                                     Post selectedPost = new Post();
                                     for (int i = 0; i < postList.size(); i++) {
@@ -126,7 +149,7 @@ public class PostListViewModel {
                                         }
                                     }
                                     intent.putExtra("post", (Serializable) selectedPost);
-                                    missingPetsFragment.getActivity().startActivity(intent);
+                                    fragment.getActivity().startActivity(intent);
                                     return false;
                                 }
                             });
@@ -141,7 +164,7 @@ public class PostListViewModel {
                     Post post = (Post) object;
                     postDetailsAdapter.getPostList().update(post.getPostID(), post);
                     postDetailsAdapter.reloadList(postDetailsAdapter.getPostList().getIndexByKey(post.getPostID()), UPDATE);
-                    SupportMapFragment supportMapFragment = (SupportMapFragment) missingPetsFragment.getChildFragmentManager().findFragmentById(R.id.map_fragment);
+                    SupportMapFragment supportMapFragment = (SupportMapFragment) fragment.getChildFragmentManager().findFragmentById(R.id.map_fragment);
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -163,7 +186,7 @@ public class PostListViewModel {
                     Post post = (Post) object;
                     postDetailsAdapter.getPostList().update(post.getPostID(), post);
                     postDetailsAdapter.reloadList(postDetailsAdapter.getPostList().getIndexByKey(post.getPostID()), DELETE);
-                    SupportMapFragment supportMapFragment = (SupportMapFragment) missingPetsFragment.getChildFragmentManager().findFragmentById(R.id.map_fragment);
+                    SupportMapFragment supportMapFragment = (SupportMapFragment) fragment.getChildFragmentManager().findFragmentById(R.id.map_fragment);
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -185,14 +208,14 @@ public class PostListViewModel {
 
             @Override
             public void onCancelled(Object object) {
-                Utility.showMessage(missingPetsFragment.getActivity(), missingPetsFragment.getString(R.string.some_thing_went_wrong));
+                Utility.showMessage(fragment.getActivity(), fragment.getString(R.string.some_thing_went_wrong));
             }
         });
     }
 
     public void removeListener() {
         Log.w(TAG, "start to do setAdapter()");
-        FirebaseUtility.removeFireBaseChildListener(missingPetsFragment.getActivity(), firebaseRequestModel);
+        FirebaseUtility.removeFireBaseChildListener(fragment.getActivity(), firebaseRequestModel);
     }
 
 }

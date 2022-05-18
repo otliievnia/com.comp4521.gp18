@@ -37,7 +37,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/nunito"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical|left"
                 android:text="Local Pathway"
                 android:textColor="?attr/colorPrimary"

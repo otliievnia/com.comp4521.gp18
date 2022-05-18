@@ -3,11 +3,14 @@ package com.example.comp4521;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -32,6 +35,7 @@ public class PostDetail extends AppCompatActivity {
 
     private Button backbtn;
     private Button locationBtn;
+    private Button contactBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +70,16 @@ public class PostDetail extends AppCompatActivity {
 
         backbtn = findViewById(R.id.backBtn);
         locationBtn = findViewById(R.id.locationBtn);
+        contactBtn = findViewById(R.id.contactBtn);
+
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goMissingPet();
+                if (post.getMissingOrStray().equals("missing")) {
+                    goMissingPet();
+                } else {
+                    goStrayPet();
+                }
             }
         });
         locationBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +88,32 @@ public class PostDetail extends AppCompatActivity {
                 goViewLocation();
             }
         });
+        contactBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = "Hi! I would like to ask about the post of " + post.getName() + " on the PetReuniion app.";
+                String phone = "+852 " + "95502882";
+                if (isWhatappInstalled()) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://api.whatsapp.com/send?phone=" +phone+"&text="+message ));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(PostDetail.this, "Whatapp is not installed",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public boolean isWhatappInstalled() {
+        PackageManager packageManager = getPackageManager();
+        boolean whatsappInstalled;
+        try {
+            packageManager.getPackageInfo("com.whatsapp",PackageManager.GET_ACTIVITIES);
+            whatsappInstalled = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            whatsappInstalled = false;
+        }
+        return whatsappInstalled;
     }
 
     public void goMissingPet() {
@@ -85,9 +121,16 @@ public class PostDetail extends AppCompatActivity {
         intent.putExtra("fragment", "missing_pets");
         startActivity(intent);
     }
+
+    public void goStrayPet() {
+        Intent intent = new Intent(this, Main.class);
+        intent.putExtra("fragment", "stray_pets");
+        startActivity(intent);
+    }
+
     public void goViewLocation() {
         Intent intent = new Intent(this, ViewLocation.class);
-        intent.putExtra("post", (Serializable)post);
+        intent.putExtra("post", (Serializable) post);
         startActivity(intent);
     }
 }

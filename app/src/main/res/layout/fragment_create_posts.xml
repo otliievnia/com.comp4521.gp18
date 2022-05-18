@@ -1,14 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreatePosts">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Create Post Fragment" />
+        android:background="@drawable/background_yellow"
+        android:elevation="10dp"
+        android:layout_height="60dp">
 
-</FrameLayout>
+        <RelativeLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_vertical|left"
+                android:text="Create Post"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/create_post_img" />
+
+    <TextView
+        android:id="@+id/missing_text"
+        android:layout_below="@id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:textColor="?attr/colorPrimary"
+        android:fontFamily="@font/roboto"
+        android:text="Is your pet missing?" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/missing_pet_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/missing_text"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:fontFamily="@font/roboto"
+        android:text="Post Missing Pets"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        app:cornerRadius="10dp" />
+
+    <TextView
+        android:id="@+id/stray_text"
+        android:layout_below="@id/missing_pet_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:textColor="?attr/colorPrimary"
+        android:fontFamily="@font/roboto"
+        android:text="Do you find any pets without owners?" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/stray_pet_btn"
+        app:cornerRadius="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/stray_text"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="?attr/colorSecondary"
+        android:fontFamily="@font/roboto"
+        android:text="Post Stray Pets"
+        android:textAllCaps="false"
+        android:textSize="20dp" />
+
+</RelativeLayout>

@@ -13,33 +13,47 @@
             android:layout_width="match_parent"
             android:background="@drawable/background_yellow"
             android:elevation="10dp"
-            android:layout_height="60dp">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:id="@+id/topbar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/topbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/nunito"
+                        android:gravity="center_vertical|left"
+                        android:text="Missing Pet"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="20dp" />
+
+                </RelativeLayout>
+
+                <SearchView
+                    android:id="@+id/search_view"
+                    android:iconifiedByDefault="false"
+                    android:background="@drawable/edittext"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/nunito"
-                    android:gravity="center_vertical|left"
-                    android:text="Missing Pets"
-                    android:textColor="?attr/colorPrimary"
-                    android:textSize="20dp" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
+                    android:queryHint="Search Location"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="right"
-                    android:src="@drawable/house" />
-            </RelativeLayout>
+                    android:layout_marginBottom="10dp" />
+            </LinearLayout>
+
 
         </androidx.appcompat.widget.Toolbar>
         <!-- TODO: Update blank fragment layout -->
@@ -67,14 +81,14 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerInParent="true"
                 android:src="@drawable/ic_remove"
-                android:tint="@color/blue" />
+                app:tint="@color/blue" />
 
             <LinearLayout
                 android:id="@+id/filter"
                 android:layout_below="@id/bar"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:weightSum="10"
+                android:weightSum="9"
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
@@ -86,7 +100,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_weight="2.8"
+                    android:layout_weight="3"
                     android:background="@drawable/background_yellow_whole"
                     android:drawableLeft="@drawable/dog_filter_small"
                     android:elevation="4dp"
@@ -102,7 +116,7 @@
                     android:id="@+id/missing_cat_btn"
                     android:elevation="4dp"
                     android:background="@drawable/background_yellow_whole"
-                    android:layout_weight="2.8"
+                    android:layout_weight="3"
                     app:backgroundTint="@null"
                     android:layout_width="0dp"
                     android:gravity="left"
@@ -120,7 +134,7 @@
                     android:id="@+id/missing_others_btn"
                     android:elevation="4dp"
                     android:background="@drawable/background_yellow_whole"
-                    android:layout_weight="2.8"
+                    android:layout_weight="3"
                     app:backgroundTint="@null"
                     android:layout_width="0dp"
                     android:layout_marginRight="5dp"
@@ -134,15 +148,6 @@
                     android:textSize="16dp"
                     android:drawableLeft="@drawable/dog_filter_small" />
 
-                <Button
-                    android:layout_width="0dp"
-                    android:elevation="0dp"
-                    android:drawableTint="@color/blue"
-                    android:stateListAnimator="@null"
-                    android:drawableLeft="@drawable/ic_filter_icon"
-                    app:backgroundTint="@color/transparent"
-                    android:layout_weight="1.5"
-                    android:layout_height="40dp" />
             </LinearLayout>
 
             <androidx.core.widget.NestedScrollView

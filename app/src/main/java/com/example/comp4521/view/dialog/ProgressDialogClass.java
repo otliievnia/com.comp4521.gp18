@@ -7,11 +7,11 @@ import androidx.fragment.app.Fragment;
 
 public class ProgressDialogClass {
     private ProgressDialog dialogObj;
-    private Fragment fragment;
+    private Activity activity;
 
-    public ProgressDialogClass(final Fragment fragment) {
-        this.fragment = fragment;
-        dialogObj = new ProgressDialog(fragment.getActivity());
+    public ProgressDialogClass(final Activity activity) {
+        this.activity = activity;
+        dialogObj = new ProgressDialog(activity);
     }
 
     public void showDialog(final String title, final String msg) {
@@ -21,7 +21,7 @@ public class ProgressDialogClass {
     }
 
     public void dismissDialog() {
-        fragment.getActivity().runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // TODO Auto-generated method stub

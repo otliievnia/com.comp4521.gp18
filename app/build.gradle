@@ -55,4 +55,5 @@ dependencies {
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.facebook.android:facebook-share:latest.release'
 }
