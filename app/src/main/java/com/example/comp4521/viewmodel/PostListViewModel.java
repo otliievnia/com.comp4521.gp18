@@ -54,11 +54,12 @@ public class PostListViewModel {
     private PostRepository postRepository;
     private FirebaseRequestModel firebaseRequestModel;
     private ArrayList<Marker> mMarkerArray = new ArrayList<Marker>();
+    private String missingOrStray;
 
-
-    public PostListViewModel(MissingPets missingPetsFragment, FragmentMissingPetsBinding fragmentMissingPetsBinding) {
+    public PostListViewModel(MissingPets missingPetsFragment, FragmentMissingPetsBinding fragmentMissingPetsBinding, String missingOrStray) {
         this.fragmentMissingPetsBinding = fragmentMissingPetsBinding;
         this.missingPetsFragment = missingPetsFragment;
+        this.missingOrStray = missingOrStray;
         postRepository = new PostRepositoryImpl(missingPetsFragment);
     }
 
@@ -92,6 +93,10 @@ public class PostListViewModel {
             public void onChildAdded(Object object) {
                 if (object != null) {
                     Post post = (Post) object;
+                    Log.w(TAG, "getAllPosts(); post Similarity is:"+post.getSimilarity());
+                    if (!post.getMissingOrStray().equals(missingOrStray)){
+                        return;
+                    }
                     if (postDetailsAdapter == null)
                         setAdapter(new IndexedLinkedHashMap<String, Post>());
                     postDetailsAdapter.getPostList().add(post.getPostID(), post);

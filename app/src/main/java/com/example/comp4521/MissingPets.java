@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 
@@ -58,6 +59,7 @@ public class MissingPets extends Fragment {
     PostListViewModel postListViewModel;
     private FusedLocationProviderClient client;
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -88,7 +90,7 @@ public class MissingPets extends Fragment {
         }
 
         // TODO: uncomment below code to continue integration, The first "this" is not match between activity and fragment
-        postListViewModel = new PostListViewModel(this, binding);
+        postListViewModel = new PostListViewModel(this, binding, "missing");
         postListViewModel.init();
 
         FrameLayout mScrollContainer = view.findViewById(R.id.bottom_sheet);
@@ -137,6 +139,7 @@ public class MissingPets extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
+
                     if (location != null) {
                         // Async map
                         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -150,6 +153,7 @@ public class MissingPets extends Fragment {
                             }
                         });
                     } else {
+
                         LocationRequest locationRequest = LocationRequest.create() //if you want access of variable
                                 .setInterval(10000)
                                 .setFastestInterval(1000)

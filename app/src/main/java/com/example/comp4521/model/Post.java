@@ -25,6 +25,7 @@ public class Post implements Serializable {
     private Long updatedDateTime;
     private Image images;
     private String similarity;
+    private String missingOrStray;
 
     public Post() {
     }
@@ -123,6 +124,14 @@ public class Post implements Serializable {
 
     public void setSimilarity(String similarity) {
         this.similarity = similarity;
+    }
+
+    public String getMissingOrStray() {
+        return missingOrStray;
+    }
+
+    public void setMissingOrStray(String missingOrStray) {
+        this.missingOrStray = missingOrStray;
     }
 
     @Exclude
