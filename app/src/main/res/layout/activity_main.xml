@@ -5,17 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Main">
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/topbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        android:background="@drawable/profile_topbar_bg"-->
+    <!--        android:text="Profile"-->
+    <!--        android:elevation="10dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentLeft="true"-->
+    <!--            android:layout_centerInParent="true"-->
+    <!--            android:fontFamily="@font/roboto"-->
+    <!--            android:gravity="center_vertical|left"-->
+    <!--            android:paddingLeft="40dp"-->
+    <!--            android:layout_marginTop="-50dp"-->
+    <!--            android:text="Hello,"-->
+    <!--            android:textColor="?attr/colorPrimary"-->
+    <!--            android:textSize="33dp" />-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentLeft="true"-->
+    <!--            android:layout_centerInParent="true"-->
+    <!--            android:layout_marginTop="40dp"-->
+    <!--            android:fontFamily="@font/nunito"-->
+    <!--            android:gravity="center_vertical|left"-->
+    <!--            android:paddingLeft="40dp"-->
+    <!--            android:text="Username"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="36dp" />-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentRight="true"-->
+    <!--            android:layout_centerInParent="true"-->
+    <!--            android:layout_marginRight="60dp"-->
+    <!--            android:gravity="center_vertical|right"-->
+    <!--            android:src="@drawable/dog"-->
+    <!--            />-->
+    <!--    </RelativeLayout>-->
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

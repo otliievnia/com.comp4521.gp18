@@ -25,14 +25,16 @@ import static com.example.comp4521.constants.Constant.SUCCESS;
 import static com.example.comp4521.firebase.FirebaseConstants.POST_TABLE;
 import static com.example.comp4521.firebase.FirebaseDatabaseReference.DATABASE;
 
+import androidx.fragment.app.Fragment;
+
 public class PostRepositoryImpl extends FirebaseRepository implements PostRepository {
     private ProgressDialogClass progressDialog;
-    private Activity activity;
+    private Fragment fragment;
     private DatabaseReference postDatabaseReference;
 
-    public PostRepositoryImpl(Activity activity) {
-        this.activity = activity;
-        progressDialog = new ProgressDialogClass(activity);
+    public PostRepositoryImpl(Fragment fragment) {
+        this.fragment = fragment;
+        progressDialog = new ProgressDialogClass(fragment);
         postDatabaseReference = DATABASE.getReference(POST_TABLE);
     }
 
@@ -301,6 +303,6 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     private String getString(int id) {
-        return activity.getString(id);
+        return fragment.getString(id);
     }
 }

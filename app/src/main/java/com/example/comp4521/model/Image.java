@@ -10,7 +10,7 @@ public class Image implements Serializable {
     }
 
     public void setImageUrls(String[] new_imageurls) {
-        for(int i=0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             imageUrls[i] = new_imageurls[i];
         }
     }

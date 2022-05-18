@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MissingPets">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:background="@drawable/background_yellow"
+            android:elevation="10dp"
+            android:layout_height="60dp">
+
+            <RelativeLayout
+                android:id="@+id/topbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/backBtn"
+                    android:layout_width="43dp"
+                    android:paddingStart="6dp"
+                    android:background="@color/transparent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical|left"
+                    android:drawableLeft="@drawable/back_icon"
+                    android:drawableTint="?attr/colorPrimary"
+                    android:minWidth="0dp"
+                    android:textSize="24sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="50dp"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/nunito"
+                    android:gravity="center_vertical|left"
+                    android:text="View Location"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+        <!-- TODO: Update blank fragment layout -->
+        <fragment
+            android:id="@+id/map_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

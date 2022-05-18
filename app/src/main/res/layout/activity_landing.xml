@@ -28,6 +28,7 @@
         android:layout_height="361dp"
         android:layout_below="@id/signInBtn"
         android:src="@drawable/landingpageimage" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

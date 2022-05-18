@@ -7,7 +7,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseUtility {
-    public static void removeFireBaseChildListener( Activity activity,FirebaseRequestModel firebaseRequestModel) {
+    public static void removeFireBaseChildListener(Activity activity, FirebaseRequestModel firebaseRequestModel) {
         if (firebaseRequestModel != null) {
             if (firebaseRequestModel.getListner() != null && firebaseRequestModel.getQuery() != null) {
                 ChildEventListener childEventListener = (ChildEventListener) firebaseRequestModel.getListner();
@@ -17,7 +17,7 @@ public class FirebaseUtility {
         }
     }
 
-    public static void removeFireBaseValueEventListener( Activity activity,FirebaseRequestModel firebaseRequestModel) {
+    public static void removeFireBaseValueEventListener(Activity activity, FirebaseRequestModel firebaseRequestModel) {
         if (firebaseRequestModel != null) {
             if (firebaseRequestModel.getListner() != null && firebaseRequestModel.getQuery() != null) {
                 ValueEventListener valueEventListener = (ValueEventListener) firebaseRequestModel.getListner();

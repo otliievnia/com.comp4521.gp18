@@ -2,6 +2,7 @@ package com.example.comp4521;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,13 +21,14 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
     private Button backInButton;
-    private EditText emailEditText ;
-    private EditText passwordEditText ;
+    private EditText emailEditText;
+    private EditText passwordEditText;
     private Button loginButton;
     private ProgressBar loadingProgressBar;
     private static final String TAG = "Login";
     // [START declare_auth]
     private FirebaseAuth mAuth;
+
     // [END declare_auth]
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +56,10 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 String password = passwordEditText.getText().toString();
-                if ( emailEditText.getText().toString().isEmpty() || passwordEditText.getText().toString().isEmpty()) {
+                if (emailEditText.getText().toString().isEmpty() || passwordEditText.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Input should not be empty", Toast.LENGTH_SHORT).show();
-                }else {
-                    signIn( emailEditText.getText().toString(),  passwordEditText.getText().toString());
+                } else {
+                    signIn(emailEditText.getText().toString(), passwordEditText.getText().toString());
                 }
                 loadingProgressBar.setVisibility(View.GONE);
             }
@@ -95,11 +97,15 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(this, Landing.class);
         startActivity(intent);
     }
+
     public void goProfileActivity() {
         Intent intent = new Intent(this, Main.class);
+        intent.putExtra("fragment", "profile");
         startActivity(intent);
     }
-    private void reload() { }
+
+    private void reload() {
+    }
 
     private void updateUI(FirebaseUser user) {
 

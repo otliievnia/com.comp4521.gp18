@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/yellow"
+    android:layout_height="match_parent"
+    tools:context=".PostDetail">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@drawable/background_yellow"
+        android:layout_height="60dp">
+
+        <RelativeLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/backBtn"
+                android:layout_width="43dp"
+                android:paddingStart="6dp"
+                android:background="@color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical|left"
+                android:drawableLeft="@drawable/back_icon"
+                android:drawableTint="?attr/colorPrimary"
+                android:minWidth="0dp"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/nunito"
+                android:gravity="center_vertical|left"
+                android:text="Post Details"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/bottomsheet_background"
+        app:backgroundTint="@null">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/image_slider"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    app:iss_corner_radius="20"
+                    app:iss_auto_cycle="true"
+                    app:iss_delay="0"
+                    app:iss_period="3000" />
+
+                <GridLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:columnCount="2"
+                    android:useDefaultMargins="true">
+
+                    <Button
+                        android:id="@+id/locationBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        app:backgroundTint="@null"
+                        android:background="@drawable/button_background"
+                        android:gravity="left"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/roboto"
+                        android:drawableTint="@color/white"
+                        android:drawableLeft="@drawable/location_icon"
+                        android:text="View Location" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        app:backgroundTint="@null"
+                        android:background="@drawable/button_background"
+                        android:gravity="left"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/roboto"
+                        android:drawableTint="@color/white"
+                        android:drawableLeft="@drawable/ic_message_icon"
+                        android:text="Contact Owner" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        app:backgroundTint="@null"
+                        android:background="@drawable/button_background"
+                        android:gravity="left"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/roboto"
+                        android:drawableTint="@color/white"
+                        android:drawableLeft="@drawable/ic_share_icon"
+                        android:text="Share Posts" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill_horizontal"
+                        app:backgroundTint="@null"
+                        android:background="@drawable/button_background"
+                        android:gravity="left"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/roboto"
+                        android:drawableTint="@color/white"
+                        android:drawableLeft="@drawable/ic_fav"
+                        android:text="Set Favourite" />
+
+                </GridLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:padding="20dp"
+                    android:background="@drawable/edittext"
+                    android:elevation="10dp">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:weightSum="5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/nunito"
+                            android:textSize="20dp"
+                            android:text="Type:"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="?attr/colorPrimary"
+                            android:id="@+id/type"
+                            android:layout_weight="3.2"
+                            android:layout_width="0dp"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/nunito"
+                            android:textSize="20dp"
+                            android:text="Breed:"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="?attr/colorPrimary"
+                            android:id="@+id/breed"
+                            android:layout_weight="3.2"
+                            android:layout_width="0dp"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/nunito"
+                            android:textSize="20dp"
+                            android:text="Gender:"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="?attr/colorPrimary"
+                            android:id="@+id/sex"
+                            android:layout_weight="3.2"
+                            android:layout_width="0dp"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/nunito"
+                            android:textSize="20dp"
+                            android:text="Name:"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="?attr/colorPrimary"
+                            android:id="@+id/name"
+                            android:layout_weight="3.2"
+                            android:layout_width="0dp"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/nunito"
+                            android:textSize="20dp"
+                            android:text="Location:"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="?attr/colorPrimary"
+                            android:id="@+id/location"
+                            android:layout_weight="3.2"
+                            android:layout_width="0dp"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/nunito"
+                            android:textSize="20dp"
+                            android:text="Post Date:"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="?attr/colorPrimary"
+                            android:id="@+id/date"
+                            android:layout_weight="3.2"
+                            android:layout_width="0dp"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:fontFamily="@font/nunito"
+                            android:textSize="20dp"
+                            android:text="Descriptions:"
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="?attr/colorPrimary"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/description"
+                            android:layout_width="match_parent"
+                            android:fontFamily="@font/roboto"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@drawable/background_white"
+        android:elevation="10dp"
+        android:layout_height="60dp">
+
+        <RelativeLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/backBtn"
+                android:layout_width="43dp"
+                android:paddingStart="6dp"
+                android:background="@color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical|left"
+                android:drawableLeft="@drawable/back_icon"
+                android:drawableTint="?attr/colorPrimary"
+                android:minWidth="0dp"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/nunito"
+                android:layout_marginLeft="50dp"
+                android:gravity="center_vertical|left"
+                android:text="Local Pathway"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:src="@drawable/house" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/pathway1"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                android:elevation="15dp"
+                android:background="@drawable/background_whole_dark_yellow"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/name1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito"
+                        android:lineSpacingExtra="-5dp"
+                        android:text="Society for the Prevention of Cruelty to Animals"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/phone1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name1"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/phone_icon"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:text="2802 5051"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/link1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/phone1"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/link_icon"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:text="www.spca.org.hk"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_below="@id/link1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:drawableLeft="@drawable/location_icon"
+                        android:drawableTint="@color/white"
+                        android:textSize="16dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="5 Wan Shing St, Wan Chai" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/logo1"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/pathway_logo1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pathway2"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                android:elevation="15dp"
+                android:background="@drawable/background_whole_dark_yellow"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:lineSpacingExtra="-5dp"
+                        android:id="@+id/name2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito"
+                        android:text="Hong Kong Paws Guardian Rescue Shelter"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/phone2"
+                        android:layout_below="@id/name2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:drawableLeft="@drawable/phone_icon"
+                        android:drawableTint="@color/white"
+                        android:textSize="16dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="6999 4227" />
+
+                    <TextView
+                        android:id="@+id/link2"
+                        android:layout_below="@id/phone2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:drawableLeft="@drawable/link_icon"
+                        android:drawableTint="@color/white"
+                        android:textSize="16dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="www.pgrs.life" />
+
+                    <TextView
+                        android:layout_below="@id/link2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:drawableLeft="@drawable/location_icon"
+                        android:drawableTint="@color/white"
+                        android:textSize="16dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="G/F, 131 Yee Kuk Street, Sham Shui Po, Kowloon" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/logo2"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/pathway_logo2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pathway3"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                android:elevation="15dp"
+                android:background="@drawable/background_whole_dark_yellow"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:lineSpacingExtra="-5dp"
+                        android:id="@+id/name3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/nunito"
+                        android:textSize="20dp"
+                        android:text="Hong Kong Paws Foundation" />
+
+                    <TextView
+                        android:id="@+id/phone3"
+                        android:layout_below="@id/name3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:drawableLeft="@drawable/phone_icon"
+                        android:drawableTint="@color/white"
+                        android:textSize="16dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="9485 5188" />
+
+                    <TextView
+                        android:id="@+id/link3"
+                        android:layout_below="@id/phone3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:drawableLeft="@drawable/link_icon"
+                        android:drawableTint="@color/white"
+                        android:textSize="16dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="www.hkpaws.org" />
+
+                    <TextView
+                        android:layout_below="@id/link3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/robotolight"
+                        android:drawableLeft="@drawable/location_icon"
+                        android:drawableTint="@color/white"
+                        android:textSize="16dp"
+                        android:drawablePadding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:text="8 Tai On Terrace, Sheung Wan" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/logo3"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/pathway_logo3" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+

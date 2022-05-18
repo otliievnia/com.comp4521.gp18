@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Missing Pets"
+    <item
+        android:title="Missing Pets"
         android:icon="@drawable/missing_pets_icon"
-        android:id="@+id/navigation_missing_pets"/>
-    <item android:title="Stray Pets"
+        android:id="@+id/navigation_missing_pets" />
+    <item
+        android:title="Stray Pets"
         android:icon="@drawable/stray_pets_icon"
-        android:id="@+id/navigation_stray_pets"/>
-    <item android:title="Create Posts"
+        android:id="@+id/navigation_stray_pets" />
+    <item
+        android:title="Create Posts"
         android:icon="@drawable/create_posts_icon"
-        android:id="@+id/navigation_create_posts"/>
-    <item android:title="Profile"
+        android:id="@+id/navigation_create_posts" />
+    <item
+        android:title="Profile"
         android:icon="@drawable/profile_icon"
-        android:id="@+id/navigation_profile"/>
+        android:id="@+id/navigation_profile" />
 </menu>

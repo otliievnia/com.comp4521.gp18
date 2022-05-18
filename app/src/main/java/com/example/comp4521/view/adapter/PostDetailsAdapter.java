@@ -1,6 +1,7 @@
 package com.example.comp4521.view.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,29 +9,43 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comp4521.Landing;
+import com.example.comp4521.PostDetail;
 import com.example.comp4521.R;
 import com.example.comp4521.databinding.PostInfoRowLayoutBinding;
 import com.example.comp4521.helper.IndexedLinkedHashMap;
 import com.example.comp4521.model.Post;
 import com.example.comp4521.utility.Utility;
-import com.example.comp4521.view.activity.AddPostActivity;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+//import com.example.comp4521.view.activity.AddPostActivity;
 
 import static com.example.comp4521.constants.Constant.ADD;
 import static com.example.comp4521.constants.Constant.DELETE;
 import static com.example.comp4521.constants.Constant.EMPLOYEE_MODEL;
 import static com.example.comp4521.constants.Constant.UPDATE;
 
+import java.io.Serializable;
+
 
 public class PostDetailsAdapter extends RecyclerView.Adapter<PostDetailsAdapter.PostViewHolder> {
     private IndexedLinkedHashMap<String, Post> postList;
     private LayoutInflater layoutInflater;
-    private Activity activity;
+    private Fragment fragment;
+    private Context context;
 
-    public PostDetailsAdapter(Activity activity, IndexedLinkedHashMap<String, Post> postList) {
-        this.activity = activity;
+
+    public PostDetailsAdapter(Fragment fragment, IndexedLinkedHashMap<String, Post> postList) {
+        this.fragment = fragment;
         this.postList = postList;
     }
 
@@ -47,6 +62,7 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<PostDetailsAdapter.
     @Override
     public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position) {
         final Post post = postList.getItemByIndex(getReversePosition(position));
+
         if (!Utility.isEmptyOrNull(post.getAnimalType()))
             holder.postInfoRowLayoutBinding.animalType.setText(post.getAnimalType());
         else
@@ -57,13 +73,13 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<PostDetailsAdapter.
             holder.postInfoRowLayoutBinding.location.setText(R.string.na);
         if (!Utility.isEmptyOrNull(post.convertTime(post.getCreatedDateTimeLong()))) {
             holder.postInfoRowLayoutBinding.postCreateTime.setText(post.convertTime(post.getCreatedDateTimeLong()));
-        }else
+        } else
             holder.postInfoRowLayoutBinding.postCreateTime.setText(R.string.na);
 
         //Toast.makeText(this.activity, "sim is: "+post.getSimilarity(),  Toast.LENGTH_SHORT).show();
-        if (!Utility.isEmptyOrNull(post.getSimilarity()) ) {
+        if (!Utility.isEmptyOrNull(post.getSimilarity())) {
 
-            if(post.getSimilarity().equals("high"))
+            if (post.getSimilarity().equals("high"))
                 holder.postInfoRowLayoutBinding.similarity.setText("High");
             else
                 holder.postInfoRowLayoutBinding.similarity.setText("Low");
@@ -115,14 +131,16 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<PostDetailsAdapter.
             super(postInfoRowLayoutBinding.getRoot());
             this.postInfoRowLayoutBinding = postInfoRowLayoutBinding;
             postInfoRowLayoutBinding.cardViewRowClick.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(activity, AddPostActivity.class);
-            intent.putExtra(EMPLOYEE_MODEL, postList.getItemByIndex(getReversePosition(getAdapterPosition())));
-            activity.startActivity(intent);
+            Intent intent = new Intent(fragment.getActivity(), PostDetail.class);
+            intent.putExtra("post", (Serializable) postList.getItemByIndex(getReversePosition(getAdapterPosition())));
+            fragment.getActivity().startActivity(intent);
         }
+
     }//end of view holder
 
     public IndexedLinkedHashMap<String, Post> getPostList() {

@@ -12,7 +12,6 @@
     </style>
 
 
-
     <style name="ListTitleLabel">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -53,6 +52,7 @@
         <item name="android:textColorHint">@color/grey</item>
         <item name="android:padding">@dimen/formLabelPadding</item>
     </style>
+
     <style name="MyProgressDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@null</item>
     </style>

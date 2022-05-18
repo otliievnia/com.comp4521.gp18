@@ -20,10 +20,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Signup extends AppCompatActivity {
     private Button backInButton;
-    private EditText usernameEditText ;
-    private EditText passwordEditText ;
-    private EditText emailEditText ;
-    private EditText confirmPasswordEditText ;
+    private EditText usernameEditText;
+    private EditText passwordEditText;
+    private EditText emailEditText;
+    private EditText confirmPasswordEditText;
     private Button signUpButton;
     private ProgressBar loadingProgressBar;
     private static final String TAG = "Signup";
@@ -62,29 +62,34 @@ public class Signup extends AppCompatActivity {
                 String conf_password = confirmPasswordEditText.getText().toString();
                 if (confirmPasswordEditText.getText().toString().isEmpty() || usernameEditText.getText().toString().isEmpty() || emailEditText.getText().toString().isEmpty() || passwordEditText.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Input should not be empty", Toast.LENGTH_SHORT).show();
-                }else if ( !password.equals(conf_password) ){
+                } else if (!password.equals(conf_password)) {
                     Toast.makeText(getApplicationContext(), "Your passwords are not the same", Toast.LENGTH_SHORT).show();
-                }else {
-                    createAccount( emailEditText.getText().toString(),  passwordEditText.getText().toString());
+                } else {
+                    createAccount(emailEditText.getText().toString(), passwordEditText.getText().toString());
                 }
                 loadingProgressBar.setVisibility(View.GONE);
             }
         });
     }
+
     // [START on_start_check_user]
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             reload();
         }
     }
-    private void reload() { }
+
+    private void reload() {
+    }
+
     private void checkInputs(String password, String confirm_password) {
 
     }
+
     // [END on_start_check_user]
     private void createAccount(String email, String password) {
         // [START create_user_with_email]
@@ -113,6 +118,7 @@ public class Signup extends AppCompatActivity {
                 });
         // [END create_user_with_email]
     }
+
     private void updateUI(FirebaseUser user) {
 
     }

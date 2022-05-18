@@ -1,41 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Profile">
-
-    <!-- TODO: Update blank fragment layout -->
-<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/top"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        app:elevation="0dp"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/topbar_background"
-        android:text="Profile" >
+        android:layout_height="wrap_content">
 
-        <TextView
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/roboto"
-            android:paddingLeft="15dp"
-            android:paddingTop="18dp"
-            android:text="Profile"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="20dp" />
-    </RelativeLayout>
+            android:layout_height="200dp"
+            android:background="@color/white"
+            app:contentScrim="@color/yellow"
+            android:id="@+id/collapsingToolbarLayout"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-    <TextView
-        android:id="@+id/content"
+            <RelativeLayout
+                android:animateLayoutChanges="true"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/profile_topbar_bg"
+                app:elevation="10dp"
+                app:layout_collapseMode="parallax">
+
+                <TextView
+                    android:id="@+id/welcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="-50dp"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="40dp"
+                    android:text="Hello,"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="33dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/welcome"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/nunito"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="40dp"
+                    android:text="Username"
+                    android:textColor="@color/white"
+                    android:textSize="36dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginTop="70dp"
+                    android:gravity="center_vertical|right"
+                    android:src="@drawable/dog" />
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:layout_collapseMode="pin"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <RelativeLayout
+                    android:id="@+id/topbar"
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/nunito"
+                        android:gravity="center_vertical|left"
+                        android:text="Username"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="right"
+                        android:src="@drawable/dog2" />
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top"
-        android:text="Profile Fragment" />
-</RelativeLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <!-- TODO: Update blank fragment layout -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/yourPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/nunito"
+                android:text="Your Posts"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="20dp" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/yourPostSlider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/yourPost"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:paddingStart="60dp"
+                android:paddingEnd="60dp" />
+
+            <Button
+                android:id="@+id/yourPostMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/yourPostSlider"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-50dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/roboto"
+                android:text="View All"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/favPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/yourPostMore"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/nunito"
+                android:text="Favorite Posts"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="20dp" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/favPostSlider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/favPost"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:paddingStart="60dp"
+                android:paddingEnd="60dp" />
+
+            <Button
+                android:id="@+id/favPostMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/favPostSlider"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-50dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/roboto"
+                android:text="View All"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorPrimary" />
+
+            <Button
+                android:id="@+id/localPathwayBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/favPostMore"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/blue_button_background"
+                android:fontFamily="@font/roboto"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="0dp"
+                android:text="View Local Support Pathways"
+                android:textAllCaps="false"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                app:backgroundTint="@null" />
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

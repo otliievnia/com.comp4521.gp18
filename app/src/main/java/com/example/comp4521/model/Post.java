@@ -113,7 +113,9 @@ public class Post implements Serializable {
         return images;
     }
 
-    public void setImages(Image images) {    this.images = images;  }
+    public void setImages(Image images) {
+        this.images = images;
+    }
 
     public String getSimilarity() {
         return similarity;
@@ -148,7 +150,7 @@ public class Post implements Serializable {
         this.createdDateTime = createdDateTime;
     }
 
-    public String convertTime(long time){
+    public String convertTime(long time) {
         Date date = new Date(time);
         Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return format.format(date);

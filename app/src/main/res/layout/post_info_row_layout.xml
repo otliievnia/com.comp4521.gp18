@@ -5,6 +5,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_mainCoordinatorLayout"
         android:layout_width="match_parent"
+        android:layout_margin="0dp"
+        android:padding="0dp"
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
@@ -14,24 +16,42 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/dp_5"
-            app:cardElevation="@dimen/dp_1"
+            app:cardCornerRadius="@dimen/dp_20"
+            app:cardElevation="@dimen/dp_10"
             app:cardUseCompatPadding="true"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_5"
+                android:layout_margin="@dimen/dp_15"
                 android:clickable="false"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:background="@drawable/background_white_whole"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/pet1" />
+
                 <TextView
+                    android:fontFamily="@font/nunito"
+                    android:textSize="24dp"
+                    android:textColor="?attr/colorPrimary"
                     android:id="@+id/animal_type"
                     style="@style/ListTitleLabel"
                     android:text="@string/na" />
 
                 <TextView
+                    android:drawableTint="?attr/colorPrimary"
+                    android:drawablePadding="3dp"
+                    android:drawableLeft="@drawable/location_icon"
+                    android:fontFamily="@font/robotolight"
+                    android:textSize="18dp"
+                    android:textColor="?attr/colorPrimary"
                     android:id="@+id/location"
                     style="@style/ListTitleLabel"
                     android:text="@string/na" />
@@ -39,18 +59,27 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:weightSum="6"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:drawableLeft="@drawable/ic_date_icon"
+                        android:drawablePadding="3dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:fontFamily="@font/robotolight"
+                        android:textSize="18dp"
                         android:id="@+id/post_create_time"
                         style="@style/ListTitleLabel"
-                        android:layout_weight="@integer/weight_1"
+                        android:layout_weight="2"
                         android:text="@string/na" />
 
                     <TextView
+                        android:gravity="right"
+                        android:fontFamily="@font/robotolight"
+                        android:textSize="18dp"
                         android:id="@+id/similarity"
                         style="@style/ListTitleLabel"
-                        android:layout_weight="@integer/weight_1"
+                        android:layout_weight="4"
                         android:text="@string/na" />
 
                 </LinearLayout>
