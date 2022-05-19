@@ -94,7 +94,7 @@ public class MissingPets extends Fragment {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
-        // TODO: uncomment below code to continue integration, The first "this" is not match between activity and fragment
+
         postListViewModel = new PostListViewModel(this, binding, "missing");
         postListViewModel.init();
 
@@ -178,7 +178,8 @@ public class MissingPets extends Fragment {
                                     @Override
                                     public void onMapReady(@NonNull GoogleMap googleMap) {
                                         // Initialize lat lng
-                                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                        Location location2 = locationResult.getLastLocation(); // Task==> location got null, so i add this to fix the null error.
+                                        LatLng latLng = new LatLng(location2.getLatitude(), location2.getLongitude());
                                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 18);
                                         googleMap.moveCamera(cameraUpdate);
                                         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
