@@ -21,6 +21,7 @@ import com.example.comp4521.model.User;
 import com.example.comp4521.repository.UserRepository;
 import com.example.comp4521.repository.impl.FavPostRepositoryImpl;
 import com.example.comp4521.repository.impl.UserRepositoryImpl;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -40,7 +41,7 @@ public class Login extends AppCompatActivity {
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private UserRepository userRepository;
-    private FavPostRepository fpRepo;
+
 
     // [END declare_auth]
     @Override
@@ -54,7 +55,7 @@ public class Login extends AppCompatActivity {
         loadingProgressBar = findViewById(R.id.progressBarLogin);
         loadingProgressBar.setVisibility(View.GONE);
         userRepository = new UserRepositoryImpl(this);
-        fpRepo = new FavPostRepositoryImpl(this);
+
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();

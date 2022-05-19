@@ -6,8 +6,10 @@ import com.google.firebase.database.ServerValue;
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Post implements Serializable {
@@ -23,7 +25,7 @@ public class Post implements Serializable {
     private String descriptions;
     private Long createdDateTime;
     private Long updatedDateTime;
-    private Image images;
+    private List<String> urlList;
     private String similarity;
     private String missingOrStray;
 
@@ -110,12 +112,17 @@ public class Post implements Serializable {
         this.descriptions = descriptions;
     }
 
-    public Image getImages() {
-        return images;
+    public List<String> getImageUrls() {
+        return urlList;
     }
 
-    public void setImages(Image images) {
-        this.images = images;
+    public void setImageUrls(String[] new_imageurls) {
+        urlList = new ArrayList();
+        for (int i = 0; i < 3; i++) {
+            if(new_imageurls[i] != null){
+                urlList.add(new_imageurls[i]);
+            }
+        }
     }
 
     public String getSimilarity() {
