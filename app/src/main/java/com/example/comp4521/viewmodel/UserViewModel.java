@@ -93,7 +93,7 @@ public class UserViewModel {
         if (userDetailsAdapter == null) {
             userDetailsAdapter = new UserDetailsAdapter(fragment, userIndexedLinkedHashMap);
             if (missingOrStray.equals("missing")) {
-                // TODO: change rvEmployeeList ==> rvPostList
+
                 fragmentMissingPetsBinding.rvEmployeeList.setHasFixedSize(true);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(fragment.getActivity());
                 fragmentMissingPetsBinding.rvEmployeeList.setLayoutManager(mLayoutManager);

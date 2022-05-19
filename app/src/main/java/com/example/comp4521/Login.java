@@ -15,8 +15,11 @@ import android.widget.Toast;
 
 import com.example.comp4521.callback.CallBack;
 import com.example.comp4521.model.Post;
+import com.example.comp4521.model.FavPost;
+import com.example.comp4521.repository.FavPostRepository;
 import com.example.comp4521.model.User;
 import com.example.comp4521.repository.UserRepository;
+import com.example.comp4521.repository.impl.FavPostRepositoryImpl;
 import com.example.comp4521.repository.impl.UserRepositoryImpl;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +27,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
     private Button backInButton;
@@ -35,6 +40,7 @@ public class Login extends AppCompatActivity {
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private UserRepository userRepository;
+    private FavPostRepository fpRepo;
 
     // [END declare_auth]
     @Override
@@ -48,6 +54,7 @@ public class Login extends AppCompatActivity {
         loadingProgressBar = findViewById(R.id.progressBarLogin);
         loadingProgressBar.setVisibility(View.GONE);
         userRepository = new UserRepositoryImpl(this);
+        fpRepo = new FavPostRepositoryImpl(this);
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -97,6 +104,7 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "read userid: "+gv.getUserID(), Toast.LENGTH_SHORT).show();
                                         gv.setUserEmail(user.getUserEmail());
                                         gv.setUserName(user.getName());
+
                                     }
                                 }
 

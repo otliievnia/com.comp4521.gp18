@@ -12,7 +12,7 @@ public interface PostRepository {
 
     void updatePost(String postKey, HashMap map, CallBack callBack);
 
-    void deletePost(String employeeKey, CallBack callBack);
+    void deletePost(String postKey, CallBack callBack);
 
     void readPostByKey(String postKey, CallBack callBack);
 
