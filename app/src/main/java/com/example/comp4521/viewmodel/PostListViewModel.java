@@ -85,17 +85,17 @@ public class PostListViewModel {
         if (postDetailsAdapter == null) {
             postDetailsAdapter = new PostDetailsAdapter(fragment, postIndexedLinkedHashMap);
             if (missingOrStray.equals("missing")) {
-                fragmentMissingPetsBinding.rvEmployeeList.setHasFixedSize(true);
+                fragmentMissingPetsBinding.rvPostList.setHasFixedSize(true);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(fragment.getActivity());
-                fragmentMissingPetsBinding.rvEmployeeList.setLayoutManager(mLayoutManager);
-                fragmentMissingPetsBinding.rvEmployeeList.setItemAnimator(new DefaultItemAnimator());
-                fragmentMissingPetsBinding.rvEmployeeList.setAdapter(postDetailsAdapter);
+                fragmentMissingPetsBinding.rvPostList.setLayoutManager(mLayoutManager);
+                fragmentMissingPetsBinding.rvPostList.setItemAnimator(new DefaultItemAnimator());
+                fragmentMissingPetsBinding.rvPostList.setAdapter(postDetailsAdapter);
             } else {
-                fragmentStrayPetsBinding.rvEmployeeList.setHasFixedSize(true);
+                fragmentStrayPetsBinding.rvPostList.setHasFixedSize(true);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(fragment.getActivity());
-                fragmentStrayPetsBinding.rvEmployeeList.setLayoutManager(mLayoutManager);
-                fragmentStrayPetsBinding.rvEmployeeList.setItemAnimator(new DefaultItemAnimator());
-                fragmentStrayPetsBinding.rvEmployeeList.setAdapter(postDetailsAdapter);
+                fragmentStrayPetsBinding.rvPostList.setLayoutManager(mLayoutManager);
+                fragmentStrayPetsBinding.rvPostList.setItemAnimator(new DefaultItemAnimator());
+                fragmentStrayPetsBinding.rvPostList.setAdapter(postDetailsAdapter);
             }
         } else {
             postDetailsAdapter.reloadList(postIndexedLinkedHashMap);

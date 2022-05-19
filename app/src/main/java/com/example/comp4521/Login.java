@@ -13,11 +13,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.comp4521.callback.CallBack;
+import com.example.comp4521.model.Post;
+import com.example.comp4521.model.User;
+import com.example.comp4521.repository.UserRepository;
+import com.example.comp4521.repository.impl.UserRepositoryImpl;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 
 public class Login extends AppCompatActivity {
     private Button backInButton;
@@ -28,6 +34,7 @@ public class Login extends AppCompatActivity {
     private static final String TAG = "Login";
     // [START declare_auth]
     private FirebaseAuth mAuth;
+    private UserRepository userRepository;
 
     // [END declare_auth]
     @Override
@@ -40,7 +47,7 @@ public class Login extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         loadingProgressBar = findViewById(R.id.progressBarLogin);
         loadingProgressBar.setVisibility(View.GONE);
-
+        userRepository = new UserRepositoryImpl(this);
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -79,8 +86,27 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Authentication success", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            // TODO: Move to next page
-                            goProfileActivity();
+                            GlobalVariable gv = (GlobalVariable)getApplicationContext();
+
+                            userRepository.readUserByUserEmail(email, new CallBack() {
+                                @Override
+                                public void onSuccess(Object object) {
+                                    if (object != null) {
+                                        User user = (User) object;
+                                        gv.setUserID(user.getUserId());
+                                        Toast.makeText(getApplicationContext(), "read userid: "+gv.getUserID(), Toast.LENGTH_SHORT).show();
+                                        gv.setUserEmail(user.getUserEmail());
+                                        gv.setUserName(user.getName());
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Object object) {
+
+                                }
+                            } );
+
+                            goProfileActivity();  // Move to next page
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());

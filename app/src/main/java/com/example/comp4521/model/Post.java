@@ -165,19 +165,4 @@ public class Post implements Serializable {
         return format.format(date);
     }
 
-    public HashMap<String, Object> getMap() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("animalType", getAnimalType());
-        map.put("location", getLocation());
-        map.put("gpsLatitude", getGpsLatitude());
-        map.put("gpsLongitude", getGpsLongitude());
-        map.put("breed", getBreed());
-        map.put("sex", getSex());
-        map.put("name", getName());
-        map.put("descriptions", getDescriptions());
-        map.put("images", getImages());
-        map.put("updatedDateTime", getUpdatedDateTime());
-        map.put("similarity", getSimilarity());
-        return map;
-    }
 }

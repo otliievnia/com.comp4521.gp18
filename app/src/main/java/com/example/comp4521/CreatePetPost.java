@@ -60,7 +60,7 @@ public class CreatePetPost extends AppCompatActivity {
     TextView toolbarTitle;
     com.google.android.material.radiobutton.MaterialRadioButton femaleBtn;
     com.google.android.material.radiobutton.MaterialRadioButton maleBtn;
-    Boolean female;
+    Boolean female = true;
     Boolean locationSet = false;
 
     EditText name;
@@ -156,11 +156,13 @@ public class CreatePetPost extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validate()) {
+                    GlobalVariable gv = (GlobalVariable)getApplicationContext();
                     Post post = new Post();
 
                     post.setName(name.getText().toString());
                     post.setAnimalType(type.getText().toString());
                     post.setBreed(breed.getText().toString());
+                    post.setAccountID(gv.getUserID());
                     String sex = female ? "female" : "male";
                     post.setSex(sex);
                     post.setDescriptions(description.getText().toString());
@@ -178,6 +180,7 @@ public class CreatePetPost extends AppCompatActivity {
                         List<Address> addresses = geocoder.getFromLocation(targetLocation.getLatitude(), targetLocation.getLongitude(), 1);
                         locationText = addresses.get(0).getAddressLine(0);
                     } catch (Exception e) {
+                        locationText = "";
                         e.printStackTrace();
                     }
                     post.setLocation(locationText);

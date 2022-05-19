@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_create_missing_post.xml" value="0.22916666666666666" />
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_login.xml" value="0.22916666666666666" />
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_signup.xml" value="0.4" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/fragment_create_posts.xml" value="0.19655521783181357" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/fragment_missing_pets.xml" value="0.19655521783181357" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/fragment_stray_pets.xml" value="0.19655521783181357" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.109" />
         <entry key="app/src/main/res/drawable/back_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_mild_yellow.xml" value="0.1455" />

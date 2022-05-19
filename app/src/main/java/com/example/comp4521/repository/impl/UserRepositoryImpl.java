@@ -1,49 +1,57 @@
 package com.example.comp4521.repository.impl;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import static com.example.comp4521.constants.Constant.FAIL;
+import static com.example.comp4521.constants.Constant.SUCCESS;
+import static com.example.comp4521.firebase.FirebaseConstants.USER_TABLE;
+import static com.example.comp4521.firebase.FirebaseDatabaseReference.DATABASE;
+
+import android.app.Activity;
+
+import androidx.fragment.app.Fragment;
+
 import com.example.comp4521.R;
 import com.example.comp4521.callback.CallBack;
 import com.example.comp4521.callback.FirebaseChildCallBack;
 import com.example.comp4521.firebase.FirebaseRepository;
 import com.example.comp4521.firebase.FirebaseRequestModel;
-import com.example.comp4521.model.Post;
-import com.example.comp4521.repository.PostRepository;
+import com.example.comp4521.model.User;
+import com.example.comp4521.repository.UserRepository;
 import com.example.comp4521.utility.Utility;
 import com.example.comp4521.view.dialog.ProgressDialogClass;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.example.comp4521.constants.Constant.FAIL;
-import static com.example.comp4521.constants.Constant.SUCCESS;
-import static com.example.comp4521.firebase.FirebaseConstants.POST_TABLE;
-import static com.example.comp4521.firebase.FirebaseDatabaseReference.DATABASE;
-
-import androidx.fragment.app.Fragment;
-
-public class PostRepositoryImpl extends FirebaseRepository implements PostRepository {
+public class UserRepositoryImpl extends FirebaseRepository implements UserRepository {
     private ProgressDialogClass progressDialog;
     private Fragment fragment;
-    private DatabaseReference postDatabaseReference;
+    private DatabaseReference dbReference;
+    private Activity activity;
 
-    public PostRepositoryImpl(Fragment fragment) {
+    public UserRepositoryImpl(Fragment fragment) {
         this.fragment = fragment;
         progressDialog = new ProgressDialogClass(fragment.getActivity());
-        postDatabaseReference = DATABASE.getReference(POST_TABLE);
+        dbReference = DATABASE.getReference(USER_TABLE);
     }
 
+    public UserRepositoryImpl(Activity activity) {
+        this.activity = activity;
+        progressDialog = new ProgressDialogClass(activity);
+        dbReference = DATABASE.getReference(USER_TABLE);
+    }
     @Override
-    public void createPost(Post post, final CallBack callBack) {
-        String pushKey = postDatabaseReference.push().getKey();
-        if (post != null && !Utility.isEmptyOrNull(pushKey)) {
+    public void createUser(User user, final CallBack callBack) {
+        String pushKey = dbReference.push().getKey();
+        if (user != null && !Utility.isEmptyOrNull(pushKey)) {
             progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
-            post.setPostID(pushKey);
-            DatabaseReference databaseReference = postDatabaseReference.child(pushKey);
-            fireBaseCreate(databaseReference, post, new CallBack() {
+            user.setUserId(pushKey);
+            DatabaseReference databaseReference = dbReference.child(pushKey);
+            fireBaseCreate(databaseReference, user, new CallBack() {
                 @Override
                 public void onSuccess(Object object) {
                     progressDialog.dismissDialog();
@@ -62,10 +70,10 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     @Override
-    public void updatePost(String postIdKey, HashMap map, final CallBack callBack) {
-        if (!Utility.isEmptyOrNull(postIdKey)) {
+    public void updateUser(String userIdKey, HashMap map, final CallBack callBack) {
+        if (!Utility.isEmptyOrNull(userIdKey)) {
             progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
-            DatabaseReference databaseReference = postDatabaseReference.child(postIdKey);
+            DatabaseReference databaseReference = dbReference.child(userIdKey);
             fireBaseUpdateChildren(databaseReference, map, new CallBack() {
                 @Override
                 public void onSuccess(Object object) {
@@ -85,10 +93,10 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     @Override
-    public void deletePost(String postIdKey, final CallBack callBack) {
-        if (!Utility.isEmptyOrNull(postIdKey)) {
+    public void deleteUser(String userIdKey, final CallBack callBack) {
+        if (!Utility.isEmptyOrNull(userIdKey)) {
             progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
-            DatabaseReference databaseReference = postDatabaseReference.child(postIdKey);
+            DatabaseReference databaseReference = dbReference.child(userIdKey);
             fireBaseDelete(databaseReference, new CallBack() {
                 @Override
                 public void onSuccess(Object object) {
@@ -108,18 +116,18 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     @Override
-    public void readPostByKey(String postIdKey, final CallBack callBack) {
-        if (!Utility.isEmptyOrNull(postIdKey)) {
+    public void readUserByKey(String userIdKey, final CallBack callBack) {
+        if (!Utility.isEmptyOrNull(userIdKey)) {
             progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
-            Query query = postDatabaseReference.child(postIdKey);
+            Query query = dbReference.child(userIdKey);
             fireBaseReadData(query, new CallBack() {
                 @Override
                 public void onSuccess(Object object) {
                     if (object != null) {
                         DataSnapshot dataSnapshot = (DataSnapshot) object;
                         if (dataSnapshot.getValue() != null && dataSnapshot.hasChildren()) {
-                            Post post = dataSnapshot.getValue(Post.class);
-                            callBack.onSuccess(post);
+                            User user = dataSnapshot.getValue(User.class);
+                            callBack.onSuccess(user);
                         } else
                             callBack.onSuccess(null);
                     } else
@@ -139,10 +147,10 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     @Override
-    public void readPostByName(String postName, final CallBack callBack) {
-        if (!Utility.isEmptyOrNull(postName)) {
+    public void readUserByUserEmail(String userEmail, final CallBack callBack) {
+        if (!Utility.isEmptyOrNull(userEmail)) {
             progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
-            Query query = postDatabaseReference.orderByChild("empName").equalTo(postName);
+            Query query = dbReference.orderByChild("userEmail").equalTo(userEmail);
             fireBaseReadData(query, new CallBack() {
                 @Override
                 public void onSuccess(Object object) {
@@ -154,8 +162,8 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
                          */
                         if (dataSnapshot.getValue() != null && dataSnapshot.hasChildren()) {
                             DataSnapshot child = dataSnapshot.getChildren().iterator().next();
-                            Post post = child.getValue(Post.class);
-                            callBack.onSuccess(post);
+                            User user = child.getValue(User.class);
+                            callBack.onSuccess(user);
                         } else
                             callBack.onSuccess(null);
                     } else
@@ -175,22 +183,21 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     @Override
-    public void readAllPostBySingleValueEvent(final CallBack callBack) {
+    public void readAllUserBySingleValueEvent(final CallBack callBack) {
         progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
-        //get all posts order by post's pet name
-        Query query = postDatabaseReference.orderByChild("empName");
+        Query query = dbReference.orderByChild("userEmail");
         fireBaseReadData(query, new CallBack() {
             @Override
             public void onSuccess(Object object) {
                 if (object != null) {
                     DataSnapshot dataSnapshot = (DataSnapshot) object;
                     if (dataSnapshot.getValue() != null && dataSnapshot.hasChildren()) {
-                        ArrayList<Post> postArrayList = new ArrayList<>();
+                        ArrayList<User> userArrayList = new ArrayList<>();
                         for (DataSnapshot suggestionSnapshot : dataSnapshot.getChildren()) {
-                            Post post = suggestionSnapshot.getValue(Post.class);
-                            postArrayList.add(post);
+                            User user = suggestionSnapshot.getValue(User.class);
+                            userArrayList.add(user);
                         }
-                        callBack.onSuccess(postArrayList);
+                        callBack.onSuccess(userArrayList);
                     } else
                         callBack.onSuccess(null);
                 } else
@@ -207,20 +214,19 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     @Override
-    public FirebaseRequestModel readAllPostByDataChangeEvent(final CallBack callBack) {
+    public FirebaseRequestModel readAllUserByDataChangeEvent(final CallBack callBack) {
         progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
-        //get all posts order by post pet name
-        Query query = postDatabaseReference.orderByChild("empName");
+        Query query = dbReference.orderByChild("userEmail");
         ValueEventListener valueEventListener = fireBaseDataChangeListener(query, new CallBack() {
             @Override
             public void onSuccess(Object object) {
                 if (object != null) {
                     DataSnapshot dataSnapshot = (DataSnapshot) object;
                     if (dataSnapshot.getValue() != null && dataSnapshot.hasChildren()) {
-                        ArrayList<Post> postArrayList = new ArrayList<>();
+                        ArrayList<User> postArrayList = new ArrayList<>();
                         for (DataSnapshot suggestionSnapshot : dataSnapshot.getChildren()) {
-                            Post post = suggestionSnapshot.getValue(Post.class);
-                            postArrayList.add(post);
+                            User user = suggestionSnapshot.getValue(User.class);
+                            postArrayList.add(user);
                         }
                         callBack.onSuccess(postArrayList);
                     } else
@@ -240,17 +246,17 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     @Override
-    public FirebaseRequestModel readAllPostByChildEvent(final FirebaseChildCallBack firebaseChildCallBack) {
+    public FirebaseRequestModel readAllUserByChildEvent(final FirebaseChildCallBack firebaseChildCallBack) {
         progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
         //get all posts order by created date time
-        Query query = postDatabaseReference.orderByChild("createdDateTime");
+        Query query = dbReference.orderByChild("createdDateTime");
         ChildEventListener childEventListener = fireBaseChildEventListener(query, new FirebaseChildCallBack() {
                     @Override
                     public void onChildAdded(Object object) {
                         DataSnapshot dataSnapshot = (DataSnapshot) object;
                         if (dataSnapshot.getValue() != null & dataSnapshot.hasChildren()) {
-                            Post post = dataSnapshot.getValue(Post.class);
-                            firebaseChildCallBack.onChildAdded(post);
+                            User user = dataSnapshot.getValue(User.class);
+                            firebaseChildCallBack.onChildAdded(user);
                         }
                         progressDialog.dismissDialog();
                     }
@@ -259,8 +265,8 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
                     public void onChildChanged(Object object) {
                         DataSnapshot dataSnapshot = (DataSnapshot) object;
                         if (dataSnapshot.getValue() != null & dataSnapshot.hasChildren()) {
-                            Post post = dataSnapshot.getValue(Post.class);
-                            firebaseChildCallBack.onChildChanged(post);
+                            User user = dataSnapshot.getValue(User.class);
+                            firebaseChildCallBack.onChildChanged(user);
                         }
                     }
 
@@ -268,8 +274,8 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
                     public void onChildRemoved(Object object) {
                         DataSnapshot dataSnapshot = (DataSnapshot) object;
                         if (dataSnapshot.getValue() != null & dataSnapshot.hasChildren()) {
-                            Post post = dataSnapshot.getValue(Post.class);
-                            firebaseChildCallBack.onChildRemoved(post);
+                            User user = dataSnapshot.getValue(User.class);
+                            firebaseChildCallBack.onChildRemoved(user);
                         }
                         progressDialog.dismissDialog();
                     }
@@ -278,8 +284,8 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
                     public void onChildMoved(Object object) {
                         DataSnapshot dataSnapshot = (DataSnapshot) object;
                         if (dataSnapshot.getValue() != null & dataSnapshot.hasChildren()) {
-                            Post post = dataSnapshot.getValue(Post.class);
-                            firebaseChildCallBack.onChildMoved(post);
+                            User user = dataSnapshot.getValue(User.class);
+                            firebaseChildCallBack.onChildMoved(user);
                         }
                         progressDialog.dismissDialog();
                     }
@@ -288,8 +294,8 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
                     public void onCancelled(Object object) {
                         DataSnapshot dataSnapshot = (DataSnapshot) object;
                         if (dataSnapshot.getValue() != null & dataSnapshot.hasChildren()) {
-                            Post post = dataSnapshot.getValue(Post.class);
-                            firebaseChildCallBack.onCancelled(post);
+                            User user = dataSnapshot.getValue(User.class);
+                            firebaseChildCallBack.onCancelled(user);
                         }
                         progressDialog.dismissDialog();
                     }
@@ -301,6 +307,11 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     }
 
     private String getString(int id) {
-        return fragment.getString(id);
+        if (fragment != null){
+            return fragment.getString(id);
+        }else {
+            return activity.getString(id);
+        }
+
     }
 }

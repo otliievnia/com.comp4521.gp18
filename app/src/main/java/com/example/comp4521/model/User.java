@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class User implements Serializable {
     private String userId;
+    private String email; // firebase assigned ID
     private String displayName;
     private Long createdDateTime;
     private Long updatedDateTime;
@@ -30,6 +31,14 @@ public class User implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserEmail() {
+        return email;
+    }
+
+    public void setUserEmail(String email) {
+        this.email = email;
     }
 
     @Exclude
@@ -57,11 +66,4 @@ public class User implements Serializable {
         this.createdDateTime = createdDateTime;
     }
 
-    public HashMap<String, Object> getMap() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("userId", getUserId());
-        map.put("displayName", getName());
-        map.put("updatedDateTime", getUpdatedDateTime());
-        return map;
-    }
 }
