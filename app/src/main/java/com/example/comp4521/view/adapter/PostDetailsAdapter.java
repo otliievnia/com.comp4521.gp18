@@ -27,6 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 //import com.example.comp4521.view.activity.AddPostActivity;
 
 import static com.example.comp4521.constants.Constant.ADD;
@@ -62,7 +63,7 @@ public class PostDetailsAdapter extends RecyclerView.Adapter<PostDetailsAdapter.
     @Override
     public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position) {
         final Post post = postList.getItemByIndex(getReversePosition(position));
-
+        Picasso.get().load(String.valueOf(post.getImageUrls().get(0))).into(holder.postInfoRowLayoutBinding.animalImage);
         if (!Utility.isEmptyOrNull(post.getAnimalType()))
             holder.postInfoRowLayoutBinding.animalType.setText(post.getAnimalType());
         else

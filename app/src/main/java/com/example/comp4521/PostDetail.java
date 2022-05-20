@@ -2,14 +2,18 @@ package com.example.comp4521;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -26,11 +30,16 @@ import com.example.comp4521.model.Post;
 import com.example.comp4521.model.FavPost;
 import com.example.comp4521.repository.FavPostRepository;
 import com.example.comp4521.repository.impl.FavPostRepositoryImpl;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -39,6 +48,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PostDetail extends AppCompatActivity {
+    private static final String TAG = "error";
 
     private Post post;
     private TextView animalType;
@@ -57,6 +67,7 @@ public class PostDetail extends AppCompatActivity {
     private FavPostRepository fpRepo;
     private GlobalVariable gv ;
     boolean notYetSetFav = true;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,28 +227,55 @@ public class PostDetail extends AppCompatActivity {
     }
 
     private void shareImage() {
+        StrictMode.VmPolicy.Builder builder= new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        Target image;
+        image = new Target() {
+            @Override
+            public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent share = new Intent(Intent.ACTION_SEND);
+                        share.setType("image/jpeg");
 
-        try {
+                        ContentValues values = new ContentValues();
+                        values.put(MediaStore.Images.Media.TITLE, "title");
+                        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+                        Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                values);
 
-            URL url = new URL("http://www.helpinghomelesscats.com/images/cat1.jpg");
-            InputStream in = url.openConnection().getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(in,1024*8);
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-            int len=0;
-            byte[] buffer = new byte[1024];
-            while((len = bis.read(buffer)) != -1){
-                out.write(buffer, 0, len);
+                        OutputStream outstream;
+                        try {
+                            outstream = getContentResolver().openOutputStream(uri);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outstream);
+                            outstream.close();
+                        } catch (Exception e) {
+                            System.err.println(e.toString());
+                        }
+
+                        share.putExtra(Intent.EXTRA_STREAM, uri);
+                        startActivity(Intent.createChooser(share, "Share Image"));
+                    }
+                }).start();
             }
-            out.close();
-            bis.close();
 
-            byte[] data = out.toByteArray();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+        Picasso.get().load(String.valueOf(post.getImageUrls().get(0))).into(image);
+
+
+
+
 
     }
 
