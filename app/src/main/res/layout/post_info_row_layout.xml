@@ -75,6 +75,7 @@
                         android:text="@string/na" />
 
                     <TextView
+                        android:visibility="invisible"
                         android:gravity="right"
                         android:fontFamily="@font/robotolight"
                         android:textSize="18dp"

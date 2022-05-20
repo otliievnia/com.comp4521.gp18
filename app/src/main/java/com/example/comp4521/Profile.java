@@ -85,8 +85,10 @@ public class Profile extends Fragment {
         gv = (GlobalVariable) getActivity().getApplication().getApplicationContext();
         Button localPathwayBtn = v.findViewById(R.id.localPathwayBtn);
         TextView profileUserName = v.findViewById(R.id.profile_user_name);
+        TextView smallUser = v.findViewById(R.id.smallUser);
         //GlobalVariable.getInstance().getUserID();
         profileUserName.setText(gv.getUserName());
+        smallUser.setText(gv.getUserName());
         localPathwayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

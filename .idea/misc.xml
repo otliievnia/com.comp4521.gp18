@@ -51,14 +51,14 @@
         <entry key="app/src/main/res/layout/activity_landing.xml" value="0.10010070800781257" />
         <entry key="app/src/main/res/layout/activity_local_pathway.xml" value="0.18821309407552086" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.13078308105468753" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1901504516601563" />
         <entry key="app/src/main/res/layout/activity_post_detail.xml" value="0.22144752143162438" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.17291666666666666" />
         <entry key="app/src/main/res/layout/activity_view_location.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_create_posts.xml" value="0.23719429347826088" />
         <entry key="app/src/main/res/layout/fragment_local_pathway.xml" value="0.30912373860677084" />
         <entry key="app/src/main/res/layout/fragment_local_pathway_list.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_missing_pets.xml" value="0.1470114166221666" />
+        <entry key="app/src/main/res/layout/fragment_missing_pets.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_pathway_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2253311157226562" />
         <entry key="app/src/main/res/layout/fragment_profile2.xml" value="0.1" />

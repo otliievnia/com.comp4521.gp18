@@ -65,7 +65,7 @@
         <FrameLayout
             android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
-            android:layout_height="620dp"
+            android:layout_height="600dp"
             android:background="@drawable/bottomsheet_background"
             android:elevation="1dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
