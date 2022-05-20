@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity {
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private UserRepository userRepository;
-
+    private GlobalVariable gv;
 
     // [END declare_auth]
     @Override
@@ -94,7 +94,7 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Authentication success", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            GlobalVariable gv = (GlobalVariable) getApplicationContext();
+                            gv = (GlobalVariable) getApplicationContext();
 
                             userRepository.readUserByUserEmail(email, new CallBack() {
                                 @Override
@@ -105,6 +105,7 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), "read userid: " + gv.getUserID(), Toast.LENGTH_SHORT).show();
                                         gv.setUserEmail(user.getUserEmail());
                                         gv.setUserName(user.getName());
+                                        goProfileActivity();
 
                                     }
                                 }
@@ -113,8 +114,7 @@ public class Login extends AppCompatActivity {
 
                                 }
                             });
-
-                            goProfileActivity();  // Move to next page
+                             // Move to next page
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -135,6 +135,9 @@ public class Login extends AppCompatActivity {
     public void goProfileActivity() {
         Intent intent = new Intent(this, Main.class);
         intent.putExtra("fragment", "profile");
+        intent.putExtra("username", gv.getUserName());
+        intent.putExtra("email", gv.getUserEmail());
+        intent.putExtra("userid", gv.getUserID());
         startActivity(intent);
     }
 

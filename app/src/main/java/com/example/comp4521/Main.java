@@ -8,12 +8,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.comp4521.databinding.ActivityMainBinding;
 
 public class Main extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    public String userName;
+    public String userEmail;
+    public String userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,12 @@ public class Main extends AppCompatActivity {
         Bundle fragment = getIntent().getExtras();
         if (fragment != null) {
             String pass_fragment = fragment.getString("fragment");
+            userName = fragment.getString("username");
+            userEmail = fragment.getString("email");
+            userId = fragment.getString("userid");
+
+            // if fragment cannot access the gv, i suggest inputting the gv emails inside each constructor of fragment
+
             switch (pass_fragment) {
                 case "missing_pets":
                     binding.bottomNavigationView.setSelectedItemId(R.id.navigation_missing_pets);
