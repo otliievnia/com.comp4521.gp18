@@ -59,6 +59,7 @@ public class UserViewModel {
         this.fragment = (MissingPets) fragment;
         userRepository = new UserRepositoryImpl(this.fragment);
     }
+
     public UserViewModel(Activity activity) {
         this.activity = (Signup) activity;
         userRepository = new UserRepositoryImpl(this.activity);
@@ -68,6 +69,7 @@ public class UserViewModel {
         Log.w(TAG, "start to do createNewUser()");
         setupNewUser(user);
     }
+
     private void setupNewUser(User user) {
         userRepository.createUser(user, new CallBack() {
             @Override
@@ -87,6 +89,7 @@ public class UserViewModel {
         Log.w(TAG, "start to do init()");
         //getAllUsers();
     }
+
     /*
     private void setAdapter(IndexedLinkedHashMap<String, User> userIndexedLinkedHashMap) {
         Log.w(TAG, "start to do setAdapter()");

@@ -263,9 +263,9 @@ public class FavPostRepositoryImpl extends FirebaseRepository implements FavPost
     }
 
     private String getString(int id) {
-        if(activity != null){
+        if (activity != null) {
             return activity.getString(id);
-        }else{
+        } else {
             return fragment.getString(id);
         }
 

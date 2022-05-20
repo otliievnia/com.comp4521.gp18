@@ -119,6 +119,7 @@
                         app:backgroundTint="@null" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/shareBtn"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_columnWeight="1"

@@ -1,3 +1,5 @@
+
+
 package com.example.comp4521;
 
 import androidx.annotation.NonNull;
@@ -8,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,12 +18,14 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +34,7 @@ import com.example.comp4521.model.Post;
 import com.example.comp4521.utility.Utility;
 import com.example.comp4521.viewmodel.AddPostViewModel;
 import com.example.comp4521.viewmodel.PostListViewModel;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -43,12 +49,20 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class CreatePetPost extends AppCompatActivity {
     PostListViewModel postListViewModel;
@@ -57,6 +71,9 @@ public class CreatePetPost extends AppCompatActivity {
     Button setLocationBtn;
     Button submitBtn;
     Button backBtn;
+    Button uploadImgBtn1;
+    Button uploadImgBtn2;
+    Button uploadImgBtn3;
     TextView toolbarTitle;
     com.google.android.material.radiobutton.MaterialRadioButton femaleBtn;
     com.google.android.material.radiobutton.MaterialRadioButton maleBtn;
@@ -67,6 +84,14 @@ public class CreatePetPost extends AppCompatActivity {
     EditText type;
     EditText breed;
     EditText description;
+    EditText mobile;
+
+    ImageView imageView1;
+    ImageView imageView2;
+    ImageView imageView3;
+
+    Uri[] uploadImgUri;
+    List<Object> uploadImgUrl;
 
     Double Gpslatitude;
     Double Gpslongitude;
@@ -74,6 +99,12 @@ public class CreatePetPost extends AppCompatActivity {
     SearchView searchView;
 
     String postType = "";
+    String urlString = "";
+
+    // instance for firebase storage and StorageReference
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    StorageReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +120,24 @@ public class CreatePetPost extends AppCompatActivity {
         maleBtn = findViewById(R.id.maleBtn);
         submitBtn = findViewById(R.id.submitBtn);
         backBtn = findViewById(R.id.backBtn);
+        uploadImgBtn1 = findViewById(R.id.upload_image_btn1);
+        uploadImgBtn2 = findViewById(R.id.upload_image_btn2);
+        uploadImgBtn3 = findViewById(R.id.upload_image_btn3);
+        imageView1 = findViewById(R.id.imageView1);
+        imageView2 = findViewById(R.id.imageView2);
+        imageView3 = findViewById(R.id.imageView3);
         name = findViewById(R.id.detail_name);
         type = findViewById(R.id.detail_type);
         breed = findViewById(R.id.detail_breed);
         description = findViewById(R.id.detail_descriptions);
+        mobile = findViewById(R.id.detail_mobile);
         searchView = findViewById(R.id.search_view);
         femaleBtn.setChecked(true);
         form.setVisibility(View.INVISIBLE);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        uploadImgUri = new Uri[3];
+        uploadImgUrl = new ArrayList<Object>();
         // Initialize map fragment
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
 
@@ -152,11 +194,45 @@ public class CreatePetPost extends AppCompatActivity {
             }
         });
 
+        uploadImgBtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.with(CreatePetPost.this)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+
+            }
+        });
+        uploadImgBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.with(CreatePetPost.this)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+
+            }
+        });
+        uploadImgBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.with(CreatePetPost.this)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+
+            }
+        });
+
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validate()) {
-                    GlobalVariable gv = (GlobalVariable)getApplicationContext();
+                    GlobalVariable gv = (GlobalVariable) getApplicationContext();
                     Post post = new Post();
 
                     post.setName(name.getText().toString());
@@ -166,6 +242,7 @@ public class CreatePetPost extends AppCompatActivity {
                     String sex = female ? "female" : "male";
                     post.setSex(sex);
                     post.setDescriptions(description.getText().toString());
+                    post.setMobile(mobile.getText().toString());
                     post.setGpsLatitude(Gpslatitude);
                     post.setGpsLongitude(Gpslongitude);
                     post.setPostID(Utility.getNewId());
@@ -185,7 +262,7 @@ public class CreatePetPost extends AppCompatActivity {
                     }
                     post.setLocation(locationText);
                     post.setMissingOrStray(postType);
-
+                    post.setImageUrls(uploadImgUrl);
                     addPostViewModel.addClickListener(post, "post");
                 }
             }
@@ -234,6 +311,83 @@ public class CreatePetPost extends AppCompatActivity {
         });
     }
 
+    // UploadImage method
+    private void uploadImage(Uri uriImage) {
+
+        if (uriImage != null) {
+
+            // Code for showing progressDialog while uploading
+            ProgressDialog progressDialog = new ProgressDialog(CreatePetPost.this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            // adding listeners on upload
+            // or failure of image
+
+            // Defining the child of storageReference
+            ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            ref.putFile(uriImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(
+                                UploadTask.TaskSnapshot taskSnapshot) {
+
+                            // Image uploaded successfully
+                            // Dismiss dialog
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri downloadUrl) {
+                                    urlString = downloadUrl.toString();
+                                    if (!urlString.equals("")) {
+                                        uploadImgUrl.add(urlString);
+
+                                    }
+                                    urlString = "";
+                                    progressDialog.dismiss();
+                                    Toast.makeText(CreatePetPost.this,
+                                            "Image Uploaded!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    progressDialog.dismiss();
+                                    Log.v("getDownloadUrl onFailure", "faillll");
+                                    Toast.makeText(CreatePetPost.this,
+                                            "Image failed!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Error, Image not uploaded
+                            progressDialog.dismiss();
+                            Toast.makeText(CreatePetPost.this,
+                                    "Failed " + e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        // Progress Listener for loading
+                        // percentage on the dialog box
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress
+                                    = (100.0 * taskSnapshot.getBytesTransferred()
+                                    / taskSnapshot.getTotalByteCount());
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        }
+                    });
+
+
+        }
+
+    }
+
     private boolean validate() {
         boolean isValid = true;
 
@@ -247,6 +401,9 @@ public class CreatePetPost extends AppCompatActivity {
             isValid = false;
         }
         if (Utility.isEmptyOrNull(description.getText().toString())) {
+            isValid = false;
+        }
+        if (Utility.isEmptyOrNull(mobile.getText().toString())) {
             isValid = false;
         }
         Log.v("isValid", String.valueOf(isValid));
@@ -376,5 +533,26 @@ public class CreatePetPost extends AppCompatActivity {
                 getCurrentLocation();
             }
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData(); //uploadImgUri1
+        if (uploadImgUri[0] == null) {
+            uploadImgUri[0] = uri;
+            imageView1.setImageURI(uploadImgUri[0]);
+            uploadImage(uploadImgUri[0]);
+
+        } else if (uploadImgUri[1] == null) {
+            uploadImgUri[1] = uri;
+            imageView2.setImageURI(uploadImgUri[1]);
+            uploadImage(uploadImgUri[1]);
+        } else if (uploadImgUri[2] == null) {
+            uploadImgUri[2] = uri;
+            imageView3.setImageURI(uploadImgUri[2]);
+            uploadImage(uploadImgUri[2]);
+        }
+        // TODO: upload the data to firebase storage
     }
 }

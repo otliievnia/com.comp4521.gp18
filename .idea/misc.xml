@@ -34,6 +34,7 @@
         <entry key="app/src/main/res/drawable/phone_icon.xml" value="0.1645" />
         <entry key="app/src/main/res/drawable/profile_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/profile_topbar_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/rounded_fg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/shadow.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/shadow_background.xml" value="0.15118066406250003" />
         <entry key="app/src/main/res/drawable/stray_pets_icon.xml" value="0.2395" />
@@ -41,7 +42,7 @@
         <entry key="app/src/main/res/drawable/topbar_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/view_more_icon.xml" value="0.109" />
         <entry key="app/src/main/res/layout/activity_add_post.xml" value="0.19322916666666667" />
-        <entry key="app/src/main/res/layout/activity_create_missing_post.xml" value="0.26222826086956524" />
+        <entry key="app/src/main/res/layout/activity_create_missing_post.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_landing.xml" value="0.10010070800781257" />
         <entry key="app/src/main/res/layout/activity_local_pathway.xml" value="0.18821309407552086" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.13078308105468753" />
@@ -54,7 +55,7 @@
         <entry key="app/src/main/res/layout/fragment_local_pathway_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_missing_pets.xml" value="0.1470114166221666" />
         <entry key="app/src/main/res/layout/fragment_pathway_list.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2253311157226562" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_profile2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_stray_pets.xml" value="0.10000000000000003" />
         <entry key="app/src/main/res/layout/item_container_slider.xml" value="0.1" />

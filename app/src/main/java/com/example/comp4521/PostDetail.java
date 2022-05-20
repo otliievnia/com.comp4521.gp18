@@ -2,10 +2,15 @@ package com.example.comp4521;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +23,13 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.comp4521.helper.IndexedLinkedHashMap;
 import com.example.comp4521.model.Post;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +47,7 @@ public class PostDetail extends AppCompatActivity {
     private Button backbtn;
     private Button locationBtn;
     private Button contactBtn;
+    private Button shareBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,18 +71,32 @@ public class PostDetail extends AppCompatActivity {
         date.setText(post.convertTime(post.getCreatedDateTimeLong()));
         description.setText(post.getDescriptions());
 
+        Context context;
         ImageSlider imageSlider = findViewById(R.id.image_slider);
+
+        List<Object> postImageList = post.getImageUrls();
         List<SlideModel> imageList = new ArrayList<>(); // Create image list
 
-        imageList.add(new SlideModel(R.drawable.pet1, ScaleTypes.FIT));
-        imageList.add(new SlideModel(R.drawable.pet2, ScaleTypes.FIT));
-        imageList.add(new SlideModel(R.drawable.pet3, ScaleTypes.FIT));
+        for (int i = 0; i < postImageList.size(); i++) {
+            String imageURL = String.valueOf(postImageList.get(i));
+            imageList.add(new SlideModel(imageURL, ScaleTypes.FIT));
+        }
 
         imageSlider.setImageList(imageList, ScaleTypes.FIT);
 
         backbtn = findViewById(R.id.backBtn);
         locationBtn = findViewById(R.id.locationBtn);
         contactBtn = findViewById(R.id.contactBtn);
+        shareBtn = findViewById(R.id.shareBtn);
+
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("error","error when transform image url");
+
+                shareImage();
+            }
+        });
 
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,24 +117,55 @@ public class PostDetail extends AppCompatActivity {
         contactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = "Hi! I would like to ask about the post of " + post.getName() + " on the PetReuniion app.";
-                String phone = "+852 " + "95502882";
+                String message = "I would like to ask about the following post on the PetReuniion app: \n";
+                message += "Type: " + post.getAnimalType() + "\n";
+                message += "Breed: " + post.getBreed() + "\n";
+                message += "Gender: " + post.getSex() + "\n";
+                message += "Name: " + post.getName() + "\n";
+                message += "Location: " + post.getLocation() + "\n";
+                String phone = "+852 " + post.getMobile();
                 if (isWhatappInstalled()) {
                     Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://api.whatsapp.com/send?phone=" +phone+"&text="+message ));
+                            Uri.parse("https://api.whatsapp.com/send?phone=" + phone + "&text=" + message));
                     startActivity(intent);
                 } else {
-                    Toast.makeText(PostDetail.this, "Whatapp is not installed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PostDetail.this, "Whatapp is not installed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void shareImage() {
+
+        try {
+
+            URL url = new URL("http://www.helpinghomelesscats.com/images/cat1.jpg");
+            InputStream in = url.openConnection().getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(in,1024*8);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+            int len=0;
+            byte[] buffer = new byte[1024];
+            while((len = bis.read(buffer)) != -1){
+                out.write(buffer, 0, len);
+            }
+            out.close();
+            bis.close();
+
+            byte[] data = out.toByteArray();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean isWhatappInstalled() {
         PackageManager packageManager = getPackageManager();
         boolean whatsappInstalled;
         try {
-            packageManager.getPackageInfo("com.whatsapp",PackageManager.GET_ACTIVITIES);
+            packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
             whatsappInstalled = true;
         } catch (PackageManager.NameNotFoundException e) {
             whatsappInstalled = false;

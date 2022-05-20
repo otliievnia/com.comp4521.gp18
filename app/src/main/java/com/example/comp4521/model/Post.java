@@ -6,8 +6,10 @@ import com.google.firebase.database.ServerValue;
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Post implements Serializable {
@@ -23,9 +25,10 @@ public class Post implements Serializable {
     private String descriptions;
     private Long createdDateTime;
     private Long updatedDateTime;
-    private Image images;
+    private List<Object> imageUrls;
     private String similarity;
     private String missingOrStray;
+    private String mobile;
 
     public Post() {
     }
@@ -86,6 +89,14 @@ public class Post implements Serializable {
         this.breed = breed;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
     public String getSex() {
         return sex;
     }
@@ -110,12 +121,17 @@ public class Post implements Serializable {
         this.descriptions = descriptions;
     }
 
-    public Image getImages() {
-        return images;
+    public List<Object> getImageUrls() {
+        return imageUrls;
     }
 
-    public void setImages(Image images) {
-        this.images = images;
+    public void setImageUrls(List<Object> new_imageurls) {
+        imageUrls = new ArrayList<Object>();
+        for (int i = 0; i < new_imageurls.size(); i++) {
+            if (new_imageurls.get(i) != null) {
+                imageUrls.add(new_imageurls.get(i));
+            }
+        }
     }
 
     public String getSimilarity() {
@@ -164,5 +180,4 @@ public class Post implements Serializable {
         Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         return format.format(date);
     }
-
 }

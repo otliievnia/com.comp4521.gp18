@@ -44,6 +44,7 @@ public class UserRepositoryImpl extends FirebaseRepository implements UserReposi
         progressDialog = new ProgressDialogClass(activity);
         dbReference = DATABASE.getReference(USER_TABLE);
     }
+
     @Override
     public void createUser(User user, final CallBack callBack) {
         String pushKey = dbReference.push().getKey();
@@ -307,9 +308,9 @@ public class UserRepositoryImpl extends FirebaseRepository implements UserReposi
     }
 
     private String getString(int id) {
-        if (fragment != null){
+        if (fragment != null) {
             return fragment.getString(id);
-        }else {
+        } else {
             return activity.getString(id);
         }
 

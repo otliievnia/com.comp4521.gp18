@@ -135,24 +135,12 @@
                 android:paddingStart="60dp"
                 android:paddingEnd="60dp" />
 
-            <Button
-                android:id="@+id/yourPostMore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/yourPostSlider"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="-50dp"
-                android:background="@color/transparent"
-                android:fontFamily="@font/roboto"
-                android:text="View All"
-                android:textAllCaps="false"
-                android:textColor="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/favPost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/yourPostMore"
+                android:layout_below="@id/yourPostSlider"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:drawablePadding="5dp"
@@ -171,24 +159,12 @@
                 android:paddingStart="60dp"
                 android:paddingEnd="60dp" />
 
-            <Button
-                android:id="@+id/favPostMore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/favPostSlider"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="-50dp"
-                android:background="@color/transparent"
-                android:fontFamily="@font/roboto"
-                android:text="View All"
-                android:textAllCaps="false"
-                android:textColor="?attr/colorPrimary" />
 
             <Button
                 android:id="@+id/localPathwayBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/favPostMore"
+                android:layout_below="@id/favPostSlider"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
