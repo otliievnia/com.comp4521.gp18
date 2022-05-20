@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_create_missing_post.xml" value="0.22916666666666666" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_landing.xml" value="0.26811594202898553" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_local_pathway.xml" value="0.26811594202898553" />
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_login.xml" value="0.22916666666666666" />
+        <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_post_detail.xml" value="0.264" />
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/activity_signup.xml" value="0.4" />
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/fragment_create_posts.xml" value="0.19655521783181357" />
         <entry key="..\:/Users/Alex/Documents/GitHub/com.comp4521.gp18/app/src/main/res/layout/fragment_missing_pets.xml" value="0.19655521783181357" />
