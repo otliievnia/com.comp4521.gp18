@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class Profile extends Fragment {
     private ArrayList<FavPost> favPost_ArrayList;
     private PostRepository postRepo ;
     private ArrayList<Post> all_post_ArrayList ;
+    private ArrayList<String> favPostIdList;
     private Runnable yourPostSliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -115,7 +117,10 @@ public class Profile extends Fragment {
                 }
             }
         });
-
+        favPostViewPager = v.findViewById(R.id.favPostSlider);
+        List<FavPostClass> favPostList = new ArrayList<>();
+        yourPostViewPager = v.findViewById(R.id.yourPostSlider);
+        List<YourPost> yourPostList = new ArrayList<>();
         // [Get the list of FavPost ]
         fpRepo = new FavPostRepositoryImpl(this);
         postRepo = new PostRepositoryImpl(this);
@@ -124,10 +129,11 @@ public class Profile extends Fragment {
             @Override
             public void onSuccess(Object object) {
                 favPost_ArrayList = (ArrayList<FavPost>) object;
+                favPostIdList = new ArrayList<String>();
                 // Call PostRepositoryImpl.readPostByKey() to get the detail of a post.
-                /*for (int i = 0; i < postArrayList.size(); i++) {
-                    FavPost tempFavPost = postArrayList.get(i);
-                }*/
+                for (int i = 0; i < favPost_ArrayList.size(); i++) {
+                    favPostIdList.add(favPost_ArrayList.get(i).getPostID());
+                }
                 Toast.makeText(getActivity().getApplication().getApplicationContext(), "Got the FavPost list", Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -139,110 +145,80 @@ public class Profile extends Fragment {
             @Override
             public void onSuccess(Object object) {
                 all_post_ArrayList = (ArrayList<Post>) object;
+                for (int i = 0; i < all_post_ArrayList.size(); i++) {
+                   Post post = all_post_ArrayList.get(i);
+                   if (favPostIdList.contains(post.getPostID())) {
+                       FavPostClass pet = new FavPostClass();
+                       pet.location = post.getLocation();
+                       pet.imageUrl = String.valueOf(post.getImageUrls().get(0));
+                       pet.post = post;
+                       favPostList.add(pet);
+                   }
+                    if (post.getAccountID().equals(gv.getUserID())) {
+                        YourPost pet1 = new YourPost();
+                        pet1.location = post.getLocation();
+                        pet1.imageUrl = String.valueOf(post.getImageUrls().get(0));
+                        pet1.post = post;
+                        yourPostList.add(pet1);
+                    }
+                }
+                yourPostViewPager.setAdapter(new YourPostAdapter(yourPostList, yourPostViewPager));
+                yourPostViewPager.setClipToPadding(false);
+                yourPostViewPager.setClipChildren(false);
+                yourPostViewPager.setOffscreenPageLimit(3);
+                yourPostViewPager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+
+                CompositePageTransformer compositePageTransformer_your_post = new CompositePageTransformer();
+                compositePageTransformer_your_post.addTransformer(new MarginPageTransformer(40));
+                compositePageTransformer_your_post.addTransformer(new ViewPager2.PageTransformer() {
+                    @Override
+                    public void transformPage(@NonNull View page, float position) {
+                        float r = 1 - Math.abs(position);
+                        page.setScaleY(0.95f + r * 0.05f);
+                    }
+                });
+
+                yourPostViewPager.setPageTransformer(compositePageTransformer_your_post);
+                yourPostViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        sliderHandler.removeCallbacks(yourPostSliderRunnable);
+                        sliderHandler.postDelayed(yourPostSliderRunnable, 3000);
+                    }
+                });
+
+                favPostViewPager.setAdapter(new FavPostAdapter(favPostList, favPostViewPager));
+                favPostViewPager.setClipToPadding(false);
+                favPostViewPager.setClipChildren(false);
+                favPostViewPager.setOffscreenPageLimit(3);
+                favPostViewPager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+                CompositePageTransformer compositePageTransformer_fav_post = new CompositePageTransformer();
+                compositePageTransformer_fav_post.addTransformer(new MarginPageTransformer(40));
+                compositePageTransformer_fav_post.addTransformer(new ViewPager2.PageTransformer() {
+                    @Override
+                    public void transformPage(@NonNull View page, float position) {
+                        float r = 1 - Math.abs(position);
+                        page.setScaleY(0.95f + r * 0.05f);
+                    }
+                });
+
+                favPostViewPager.setPageTransformer(compositePageTransformer_fav_post);
+                favPostViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        sliderHandler.removeCallbacks(favPostSliderRunnable);
+                        sliderHandler.postDelayed(favPostSliderRunnable, 3000);
+                    }
+                });
                 return;
             }
 
             @Override
             public void onError(Object object) {
-            }
-        });
-        yourPostViewPager = v.findViewById(R.id.yourPostSlider);
-        List<YourPost> yourPostList = new ArrayList<>();
-
-        YourPost pet1 = new YourPost();
-        pet1.location = "location1";
-        pet1.imageUrl = "https://seenthemagazine.com/wp-content/uploads/IMG_1982-1.jpg";
-        yourPostList.add(pet1);
-
-        YourPost pet2 = new YourPost();
-        pet2.location = "location1";
-        pet2.imageUrl = "https://besthqwallpapers.com/Uploads/18-6-2018/56130/thumb2-small-brown-puppy-cute-pets-small-animals-dogs-puppies.jpg";
-        yourPostList.add(pet2);
-
-        YourPost pet3 = new YourPost();
-        pet3.location = "location1";
-        pet3.imageUrl = "https://imageio.forbes.com/specials-images/dam/imageserve/1068867780/960x0.jpg?fit=bounds&format=jpg&width=960";
-        yourPostList.add(pet3);
-
-        YourPost pet4 = new YourPost();
-        pet4.location = "location1";
-        pet4.imageUrl = "https://ichef.bbci.co.uk/news/800/cpsprodpb/16B90/production/_107427039_gettyimages-636475496.jpg";
-        yourPostList.add(pet4);
-
-        yourPostViewPager.setAdapter(new YourPostAdapter(yourPostList, yourPostViewPager));
-        yourPostViewPager.setClipToPadding(false);
-        yourPostViewPager.setClipChildren(false);
-        yourPostViewPager.setOffscreenPageLimit(3);
-        yourPostViewPager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-
-        CompositePageTransformer compositePageTransformer_your_post = new CompositePageTransformer();
-        compositePageTransformer_your_post.addTransformer(new MarginPageTransformer(40));
-        compositePageTransformer_your_post.addTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                float r = 1 - Math.abs(position);
-                page.setScaleY(0.95f + r * 0.05f);
-            }
-        });
-
-        yourPostViewPager.setPageTransformer(compositePageTransformer_your_post);
-        yourPostViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                sliderHandler.removeCallbacks(yourPostSliderRunnable);
-                sliderHandler.postDelayed(yourPostSliderRunnable, 3000);
-            }
-        });
-
-
-        favPostViewPager = v.findViewById(R.id.favPostSlider);
-        List<FavPostClass> favPostList = new ArrayList<>();
-
-        FavPostClass pet5 = new FavPostClass();
-        pet5.location = "location1";
-        pet5.imageUrl = "https://seenthemagazine.com/wp-content/uploads/IMG_1982-1.jpg";
-        favPostList.add(pet5);
-
-        FavPostClass pet6 = new FavPostClass();
-        pet6.location = "location1";
-        pet6.imageUrl = "https://besthqwallpapers.com/Uploads/18-6-2018/56130/thumb2-small-brown-puppy-cute-pets-small-animals-dogs-puppies.jpg";
-        favPostList.add(pet6);
-
-        FavPostClass pet7 = new FavPostClass();
-        pet7.location = "location1";
-        pet7.imageUrl = "https://imageio.forbes.com/specials-images/dam/imageserve/1068867780/960x0.jpg?fit=bounds&format=jpg&width=960";
-        favPostList.add(pet7);
-
-        FavPostClass pet8 = new FavPostClass();
-        pet8.location = "location1";
-        pet8.imageUrl = "https://ichef.bbci.co.uk/news/800/cpsprodpb/16B90/production/_107427039_gettyimages-636475496.jpg";
-        favPostList.add(pet8);
-
-        favPostViewPager.setAdapter(new FavPostAdapter(favPostList, favPostViewPager));
-        favPostViewPager.setClipToPadding(false);
-        favPostViewPager.setClipChildren(false);
-        favPostViewPager.setOffscreenPageLimit(3);
-        favPostViewPager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-        CompositePageTransformer compositePageTransformer_fav_post = new CompositePageTransformer();
-        compositePageTransformer_fav_post.addTransformer(new MarginPageTransformer(40));
-        compositePageTransformer_fav_post.addTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                float r = 1 - Math.abs(position);
-                page.setScaleY(0.95f + r * 0.05f);
-            }
-        });
-
-        favPostViewPager.setPageTransformer(compositePageTransformer_fav_post);
-        favPostViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                sliderHandler.removeCallbacks(favPostSliderRunnable);
-                sliderHandler.postDelayed(favPostSliderRunnable, 3000);
             }
         });
         return v;

@@ -1,5 +1,6 @@
 package com.example.comp4521;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.comp4521.helper.IndexedLinkedHashMap;
+import com.example.comp4521.model.FavPost;
+import com.example.comp4521.model.Post;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 
 public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostViewHolder> {
-    private List<FavPostClass> favPostList;
+    private static List<FavPostClass> favPostList;
     private ViewPager2 viewPager2;
 
     public FavPostAdapter(List<FavPostClass> favPostList, ViewPager2 viewPager2) {
@@ -64,6 +69,7 @@ public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostV
             Picasso.get().load(favPost.imageUrl).into(kbvPost);
             textLocation.setText(favPost.location);
         }
+
     }
 
     private Runnable runnable = new Runnable() {
@@ -73,4 +79,8 @@ public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostV
             notifyDataSetChanged();
         }
     };
+
+    public static List<FavPostClass> getPostList() {
+        return favPostList;
+    }
 }
