@@ -16,10 +16,10 @@ import java.util.List;
 
 
 public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostViewHolder> {
-    private List<FavPost> favPostList;
+    private List<FavPostClass> favPostList;
     private ViewPager2 viewPager2;
 
-    public FavPostAdapter(List<FavPost> favPostList, ViewPager2 viewPager2) {
+    public FavPostAdapter(List<FavPostClass> favPostList, ViewPager2 viewPager2) {
         this.favPostList = favPostList;
         this.viewPager2 = viewPager2;
     }
@@ -60,7 +60,7 @@ public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostV
             textLocation = itemView.findViewById(R.id.textLocation);
         }
 
-        void setPostData(FavPost favPost) {
+        void setPostData(FavPostClass favPost) {
             Picasso.get().load(favPost.imageUrl).into(kbvPost);
             textLocation.setText(favPost.location);
         }

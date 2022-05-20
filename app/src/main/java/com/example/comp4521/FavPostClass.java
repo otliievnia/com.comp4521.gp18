@@ -1,5 +1,5 @@
 package com.example.comp4521;
 
-public class FavPost {
+public class FavPostClass {
     public String location, imageUrl;
 }

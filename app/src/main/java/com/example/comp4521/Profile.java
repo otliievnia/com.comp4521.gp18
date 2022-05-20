@@ -28,6 +28,11 @@ import android.widget.TextView;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.denzcoskun.imageslider.constants.ScaleTypes; // important
+import com.example.comp4521.callback.CallBack;
+import com.example.comp4521.model.FavPost;
+import com.example.comp4521.FavPostClass;
+import com.example.comp4521.repository.FavPostRepository;
+import com.example.comp4521.repository.impl.FavPostRepositoryImpl;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -45,7 +50,9 @@ public class Profile extends Fragment {
     private ViewPager2 yourPostViewPager;
     private ViewPager2 favPostViewPager;
     private Handler sliderHandler = new Handler();
-    //private GlobalVariable gv = (GlobalVariable) getActivity().getApplication();
+    private GlobalVariable gv ;
+    private FavPostRepository fpRepo;
+    private ArrayList<FavPost> postArrayList;
 
     private Runnable yourPostSliderRunnable = new Runnable() {
         @Override
@@ -66,11 +73,11 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
-
+        gv = (GlobalVariable) getActivity().getApplication().getApplicationContext();
         Button localPathwayBtn = v.findViewById(R.id.localPathwayBtn);
         TextView profileUserName = v.findViewById(R.id.profile_user_name);
-
-        //profileUserName.setText(gv.getUserName());
+        //GlobalVariable.getInstance().getUserID();
+        profileUserName.setText(gv.getUserName());
         localPathwayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +111,22 @@ public class Profile extends Fragment {
             }
         });
 
+        // [Get the list of FavPost ]
+        fpRepo = new FavPostRepositoryImpl(this);
+        fpRepo.readFavPostByUserID(gv.getUserID(),new CallBack() {
+            @Override
+            public void onSuccess(Object object) {
+                postArrayList = (ArrayList<FavPost>) object;
+                // TODO: call PostRepositoryImpl.readPostByKey() to get the detail of a post.
+
+                return;
+            }
+
+            @Override
+            public void onError(Object object) {
+
+            }
+        });
         yourPostViewPager = v.findViewById(R.id.yourPostSlider);
         List<YourPost> yourPostList = new ArrayList<>();
 
@@ -156,24 +179,24 @@ public class Profile extends Fragment {
 
 
         favPostViewPager = v.findViewById(R.id.favPostSlider);
-        List<FavPost> favPostList = new ArrayList<>();
+        List<FavPostClass> favPostList = new ArrayList<>();
 
-        FavPost pet5 = new FavPost();
+        FavPostClass pet5 = new FavPostClass();
         pet5.location = "location1";
         pet5.imageUrl = "https://seenthemagazine.com/wp-content/uploads/IMG_1982-1.jpg";
         favPostList.add(pet5);
 
-        FavPost pet6 = new FavPost();
+        FavPostClass pet6 = new FavPostClass();
         pet6.location = "location1";
         pet6.imageUrl = "https://besthqwallpapers.com/Uploads/18-6-2018/56130/thumb2-small-brown-puppy-cute-pets-small-animals-dogs-puppies.jpg";
         favPostList.add(pet6);
 
-        FavPost pet7 = new FavPost();
+        FavPostClass pet7 = new FavPostClass();
         pet7.location = "location1";
         pet7.imageUrl = "https://imageio.forbes.com/specials-images/dam/imageserve/1068867780/960x0.jpg?fit=bounds&format=jpg&width=960";
         favPostList.add(pet7);
 
-        FavPost pet8 = new FavPost();
+        FavPostClass pet8 = new FavPostClass();
         pet8.location = "location1";
         pet8.imageUrl = "https://ichef.bbci.co.uk/news/800/cpsprodpb/16B90/production/_107427039_gettyimages-636475496.jpg";
         favPostList.add(pet8);

@@ -7,6 +7,7 @@ public class GlobalVariable extends Application {
     private String UserName;     //User name
     private String UserEmail;         //User email
 
+    //private static GlobalVariable singleton;
     public void setUserName(String UserName) {
         this.UserName = UserName;
     }
@@ -31,4 +32,13 @@ public class GlobalVariable extends Application {
         return UserEmail;
     }
 
+    /*public static GlobalVariable getInstance() {
+        return singleton;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        singleton = this;
+    }*/
 }
