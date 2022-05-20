@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -44,6 +45,8 @@ public class Profile extends Fragment {
     private ViewPager2 yourPostViewPager;
     private ViewPager2 favPostViewPager;
     private Handler sliderHandler = new Handler();
+    //private GlobalVariable gv = (GlobalVariable) getActivity().getApplication();
+
     private Runnable yourPostSliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -65,6 +68,9 @@ public class Profile extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         Button localPathwayBtn = v.findViewById(R.id.localPathwayBtn);
+        TextView profileUserName = v.findViewById(R.id.profile_user_name);
+
+        //profileUserName.setText(gv.getUserName());
         localPathwayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

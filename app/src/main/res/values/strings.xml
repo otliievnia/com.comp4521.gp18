@@ -24,4 +24,5 @@
     <string name="descriptions_error">Enter Descriptions</string>
     <string name="add">Add</string>
     <string name="update">Update</string>
+    <string name="profile_username_txt">Username</string>
 </resources>

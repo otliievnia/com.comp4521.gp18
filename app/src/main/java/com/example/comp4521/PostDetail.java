@@ -20,8 +20,12 @@ import android.widget.Toast;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.comp4521.callback.CallBack;
 import com.example.comp4521.helper.IndexedLinkedHashMap;
 import com.example.comp4521.model.Post;
+import com.example.comp4521.model.FavPost;
+import com.example.comp4521.repository.FavPostRepository;
+import com.example.comp4521.repository.impl.FavPostRepositoryImpl;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -31,6 +35,7 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PostDetail extends AppCompatActivity {
@@ -48,6 +53,10 @@ public class PostDetail extends AppCompatActivity {
     private Button locationBtn;
     private Button contactBtn;
     private Button shareBtn;
+    private Button setFavBtn;
+    private FavPostRepository fpRepo;
+    private GlobalVariable gv ;
+    boolean notYetSetFav = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +71,7 @@ public class PostDetail extends AppCompatActivity {
         location = findViewById(R.id.location);
         date = findViewById(R.id.date);
         description = findViewById(R.id.description);
-
+        setFavBtn = findViewById(R.id.set_fav_btn);
         animalType.setText(post.getAnimalType());
         breed.setText(post.getBreed());
         sex.setText(post.getSex());
@@ -70,6 +79,7 @@ public class PostDetail extends AppCompatActivity {
         location.setText(post.getLocation());
         date.setText(post.convertTime(post.getCreatedDateTimeLong()));
         description.setText(post.getDescriptions());
+        fpRepo = new FavPostRepositoryImpl(this);
 
         Context context;
         ImageSlider imageSlider = findViewById(R.id.image_slider);
@@ -131,6 +141,64 @@ public class PostDetail extends AppCompatActivity {
                 } else {
                     Toast.makeText(PostDetail.this, "Whatapp is not installed", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        setFavBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gv = (GlobalVariable) getApplicationContext();
+                FavPost favPost = new FavPost();
+                favPost.setPostID(post.getPostID());
+                favPost.setUserID(gv.getUserID());
+                fpRepo.readFavPostByUserID(gv.getUserID(),new CallBack() {
+                    @Override
+                    public void onSuccess(Object object) {
+                        ArrayList<FavPost> postArrayList = (ArrayList<FavPost>) object;
+                        String found_favpostKey = "";
+                        for(FavPost fp:postArrayList) {
+
+                            notYetSetFav = true;
+                            if (fp.getPostID().equals(post.getPostID())) {
+                                notYetSetFav = false;
+                                found_favpostKey = fp.getFavPostID();
+                                break;
+                            }
+                        }
+                        if( notYetSetFav){
+                            fpRepo.createFavPost(favPost,new CallBack() {
+                                @Override
+                                public void onSuccess(Object object) {
+                                    Toast.makeText(getApplicationContext(), "Set Favourite" , Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onError(Object object) {
+
+                                }
+                            });
+                        }else{
+                            fpRepo.deleteFavPost(found_favpostKey,new CallBack() {
+                                @Override
+                                public void onSuccess(Object object) {
+                                    Toast.makeText(getApplicationContext(), "Removed Favourite" , Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onError(Object object) {
+
+                                }
+                            });
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+
+
             }
         });
     }
