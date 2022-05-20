@@ -61,6 +61,8 @@ public class Profile extends Fragment {
     private PostRepository postRepo ;
     private ArrayList<Post> all_post_ArrayList ;
     private ArrayList<String> favPostIdList;
+    private Fragment fragment = this;
+
     private Runnable yourPostSliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -162,7 +164,7 @@ public class Profile extends Fragment {
                         yourPostList.add(pet1);
                     }
                 }
-                yourPostViewPager.setAdapter(new YourPostAdapter(yourPostList, yourPostViewPager));
+                yourPostViewPager.setAdapter(new YourPostAdapter(fragment, yourPostList, yourPostViewPager));
                 yourPostViewPager.setClipToPadding(false);
                 yourPostViewPager.setClipChildren(false);
                 yourPostViewPager.setOffscreenPageLimit(3);
@@ -189,7 +191,7 @@ public class Profile extends Fragment {
                     }
                 });
 
-                favPostViewPager.setAdapter(new FavPostAdapter(favPostList, favPostViewPager));
+                favPostViewPager.setAdapter(new FavPostAdapter(fragment, favPostList, favPostViewPager));
                 favPostViewPager.setClipToPadding(false);
                 favPostViewPager.setClipChildren(false);
                 favPostViewPager.setOffscreenPageLimit(3);

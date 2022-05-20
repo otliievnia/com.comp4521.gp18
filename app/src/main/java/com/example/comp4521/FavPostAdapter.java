@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -21,12 +22,14 @@ import java.util.List;
 
 
 public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostViewHolder> {
-    private static List<FavPostClass> favPostList;
+    private List<FavPostClass> favPostList;
     private ViewPager2 viewPager2;
+    private Fragment fragment;
 
-    public FavPostAdapter(List<FavPostClass> favPostList, ViewPager2 viewPager2) {
+    public FavPostAdapter(Fragment fragment, List<FavPostClass> favPostList, ViewPager2 viewPager2) {
         this.favPostList = favPostList;
         this.viewPager2 = viewPager2;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -54,7 +57,7 @@ public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostV
         return favPostList.size();
     }
 
-    static class FavPostViewHolder extends RecyclerView.ViewHolder {
+    class FavPostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private KenBurnsView kbvPost;
         private TextView textLocation;
@@ -63,6 +66,7 @@ public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostV
             super(itemView);
             kbvPost = itemView.findViewById(R.id.kbvPost);
             textLocation = itemView.findViewById(R.id.textLocation);
+            itemView.setOnClickListener(this);
         }
 
         void setPostData(FavPostClass favPost) {
@@ -70,8 +74,18 @@ public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostV
             textLocation.setText(favPost.location);
         }
 
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(fragment.getActivity(), PostDetail.class);
+            intent.putExtra("post", (Serializable) favPostList.get(getAdapterPosition()).post);
+            fragment.getActivity().startActivity(intent);
+        }
     }
-
+    private int getReversePosition(int index) {
+        if (favPostList != null && !favPostList.isEmpty())
+            return favPostList.size() - 1 - index;
+        else return 0;
+    }
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -80,7 +94,4 @@ public class FavPostAdapter extends RecyclerView.Adapter<FavPostAdapter.FavPostV
         }
     };
 
-    public static List<FavPostClass> getPostList() {
-        return favPostList;
-    }
 }
