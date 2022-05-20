@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -31,8 +32,11 @@ import com.denzcoskun.imageslider.constants.ScaleTypes; // important
 import com.example.comp4521.callback.CallBack;
 import com.example.comp4521.model.FavPost;
 import com.example.comp4521.FavPostClass;
+import com.example.comp4521.model.Post;
 import com.example.comp4521.repository.FavPostRepository;
+import com.example.comp4521.repository.PostRepository;
 import com.example.comp4521.repository.impl.FavPostRepositoryImpl;
+import com.example.comp4521.repository.impl.PostRepositoryImpl;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -52,8 +56,9 @@ public class Profile extends Fragment {
     private Handler sliderHandler = new Handler();
     private GlobalVariable gv ;
     private FavPostRepository fpRepo;
-    private ArrayList<FavPost> postArrayList;
-
+    private ArrayList<FavPost> favPost_ArrayList;
+    private PostRepository postRepo ;
+    private ArrayList<Post> all_post_ArrayList ;
     private Runnable yourPostSliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -113,18 +118,32 @@ public class Profile extends Fragment {
 
         // [Get the list of FavPost ]
         fpRepo = new FavPostRepositoryImpl(this);
+        postRepo = new PostRepositoryImpl(this);
+        all_post_ArrayList = new ArrayList<>(); // * ArrayList Contain all post data
         fpRepo.readFavPostByUserID(gv.getUserID(),new CallBack() {
             @Override
             public void onSuccess(Object object) {
-                postArrayList = (ArrayList<FavPost>) object;
-                // TODO: call PostRepositoryImpl.readPostByKey() to get the detail of a post.
+                favPost_ArrayList = (ArrayList<FavPost>) object;
+                // Call PostRepositoryImpl.readPostByKey() to get the detail of a post.
+                /*for (int i = 0; i < postArrayList.size(); i++) {
+                    FavPost tempFavPost = postArrayList.get(i);
+                }*/
+                Toast.makeText(getActivity().getApplication().getApplicationContext(), "Got the FavPost list", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onError(Object object) {
 
+            }
+        });
+        postRepo.readAllPostBySingleValueEvent(new CallBack() {
+            @Override
+            public void onSuccess(Object object) {
+                all_post_ArrayList = (ArrayList<Post>) object;
                 return;
             }
 
             @Override
             public void onError(Object object) {
-
             }
         });
         yourPostViewPager = v.findViewById(R.id.yourPostSlider);

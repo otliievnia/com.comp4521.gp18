@@ -150,6 +150,18 @@ public class PostDetail extends AppCompatActivity {
                 FavPost favPost = new FavPost();
                 favPost.setPostID(post.getPostID());
                 favPost.setUserID(gv.getUserID());
+                /*fpRepo.createFavPost(favPost,new CallBack() {
+                    @Override
+                    public void onSuccess(Object object) {
+                        Toast.makeText(getApplicationContext(), "Set Favourite" , Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });*/
+
                 fpRepo.readFavPostByUserID(gv.getUserID(),new CallBack() {
                     @Override
                     public void onSuccess(Object object) {

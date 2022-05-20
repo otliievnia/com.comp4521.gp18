@@ -178,7 +178,7 @@ public class PostRepositoryImpl extends FirebaseRepository implements PostReposi
     public void readAllPostBySingleValueEvent(final CallBack callBack) {
         progressDialog.showDialog(getString(R.string.loading), getString(R.string.please_wait));
         //get all posts order by post's pet name
-        Query query = postDatabaseReference.orderByChild("empName");
+        Query query = postDatabaseReference.orderByChild("createdDateTime");
         fireBaseReadData(query, new CallBack() {
             @Override
             public void onSuccess(Object object) {
