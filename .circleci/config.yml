@@ -1,0 +1,36 @@
+version: '2.1'
+orbs:
+  slack: circleci/slack@4.1
+  maven: circleci/maven@0.0.12
+jobs:
+  start-cicd:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - run: echo "Start compile my app!"
+      - slack/notify:
+          event: fail
+          mentions: '@everyone'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+  compile:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - maven/test # checkout, build, test, and upload test results
+      - slack/notify:
+          event: fail
+          mentions: '@everyone'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+workflows:
+  test-and-deploy:
+    jobs:
+      - start-cicd
+      - compile:
+          requires:
+            - start-cicd
