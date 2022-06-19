@@ -19,7 +19,7 @@ jobs:
     docker:
       - image: 'cimg/base:stable'
     steps:
-      - maven/test # checkout, build, test, and upload test results
+      #- maven/test # checkout, build, test, and upload test results
       - slack/notify:
           event: fail
           mentions: '@everyone'
