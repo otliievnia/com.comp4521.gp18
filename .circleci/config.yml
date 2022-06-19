@@ -2,24 +2,17 @@ version: '2.1'
 orbs:
   slack: circleci/slack@4.1
   maven: circleci/maven@1.3.0
+  android: circleci/android@2.0.3
 jobs:
-  start-cicd:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - run: echo "Start compile my app!"
-      - slack/notify:
-          event: fail
-          mentions: '@everyone'
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
-  compile:
-    docker:
-      - image: 'cimg/base:stable'
+  android-build:
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: 2021.10.1
     steps:
       - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
       - slack/notify:
           event: fail
           mentions: '@everyone'
@@ -30,19 +23,5 @@ jobs:
 workflows:
   test-and-deploy:
     jobs:
-      - start-cicd:
+      - android-build:
           context: slack
-      - maven/test:
-          context: slack
-          requires:
-            - start-cicd
-          pre-steps:
-            - run: mvn clean install -X
-          post-steps:
-            - slack/notify:
-                event: fail
-                mentions: '@everyone'
-                template: basic_fail_1
-            - slack/notify:
-                event: pass
-                template: success_tagged_deploy_1
