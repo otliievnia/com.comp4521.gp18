@@ -33,8 +33,11 @@ workflows:
       - start-cicd:
           context: slack
       - maven/test:
+          context: slack
           requires:
             - start-cicd
+          pre-steps:
+            - run: mvn clean install -X
           post-steps:
             - slack/notify:
                 event: fail
