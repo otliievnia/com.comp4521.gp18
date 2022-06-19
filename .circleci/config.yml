@@ -31,7 +31,9 @@ jobs:
 workflows:
   test-and-deploy:
     jobs:
-      - start-cicd
+      - start-cicd:
+          context: slack
       - compile:
+          context: slack
           requires:
             - start-cicd
