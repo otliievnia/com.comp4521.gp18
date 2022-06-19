@@ -62,4 +62,6 @@ workflows:
   test-and-deploy:
     jobs:
       - android-build:
-          context: slack
+          context: 
+            - slack
+            - google-credential
