@@ -19,8 +19,6 @@ jobs:
     docker:
       - image: 'cimg/base:stable'
     steps:
-      #- maven/test: # checkout, build, test, and upload test results
-      - run: echo "compile complete"
       - slack/notify:
           event: fail
           mentions: '@everyone'
@@ -33,8 +31,10 @@ workflows:
     jobs:
       - start-cicd:
           context: slack
-      - maven/test
+      - maven/test:
+          requires:
+            - start-cicd
       - compile:
           context: slack
           requires:
-            - start-cicd
+            - maven/test
