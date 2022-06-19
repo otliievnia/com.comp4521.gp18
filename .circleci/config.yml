@@ -15,6 +15,9 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
+      - run: "touch ./app/google-services.json"
+      - run: "echo $GOOGLE_CREDENTIAL > ./app/google-services.json"
+      - run: "cat ./app/google-services.json"
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
