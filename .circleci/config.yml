@@ -20,6 +20,7 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       #- maven/test # checkout, build, test, and upload test results
+      - run: echo "compile my app!"
       - slack/notify:
           event: fail
           mentions: '@everyone'
