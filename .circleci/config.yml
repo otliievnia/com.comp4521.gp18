@@ -1,7 +1,7 @@
 version: '2.1'
 orbs:
   slack: circleci/slack@4.1
-  #maven: circleci/maven@0.0.12
+  maven: circleci/maven@1.3.0
 jobs:
   start-cicd:
     docker:
@@ -19,8 +19,8 @@ jobs:
     docker:
       - image: 'cimg/base:stable'
     steps:
-      #- maven/test # checkout, build, test, and upload test results
-      - run: echo "compile my app!"
+      #- maven/test: # checkout, build, test, and upload test results
+      - run: echo "compile complete"
       - slack/notify:
           event: fail
           mentions: '@everyone'
@@ -33,6 +33,7 @@ workflows:
     jobs:
       - start-cicd:
           context: slack
+      - maven/test
       - compile:
           context: slack
           requires:
