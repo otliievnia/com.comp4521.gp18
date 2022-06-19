@@ -1,7 +1,7 @@
 version: '2.1'
 orbs:
   slack: circleci/slack@4.1
-  maven: circleci/maven@0.0.12
+  #maven: circleci/maven@0.0.12
 jobs:
   start-cicd:
     docker:
