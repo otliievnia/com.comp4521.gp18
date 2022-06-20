@@ -78,6 +78,8 @@ jobs:
       name: android/android-machine
       resource-class: large
       tag: 2021.10.1
+    environment:
+      JVM_OPTS: -Xmx3200m
     steps:
       - checkout
       - put-google-services-json
@@ -85,7 +87,7 @@ jobs:
       - android/restore-build-cache
       - android/start-emulator-and-run-tests:
           test-command: ./gradlew connectedDebugAndroidTest
-          system-image: system-images;android-32;google_apis;x86
+          system-image: system-images;android-29;google_apis;x86
       - run:
           name: Save test results
           command: |
