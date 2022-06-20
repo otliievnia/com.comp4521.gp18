@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:tint="@color/white"
+                app:tint="@color/white"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_fav" />
@@ -57,7 +57,7 @@
             app:layout_constraintBottom_toBottomOf="@id/textLocation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/textLocation"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/textLocation"
