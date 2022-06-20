@@ -24,7 +24,7 @@ public class PostTest {
     public void getAnimalType() {
         Post post = new Post();
         post.setAnimalType("Dog");
-        assert(post.getAnimalType().equals("Dog"));
+        assert(post.getAnimalType().equals("Dog")); // Edited the test cases
     }
 
     @Test
