@@ -352,7 +352,7 @@ public class CreatePetPost extends AppCompatActivity {
                                 @Override
                                 public void onFailure(@NonNull Exception exception) {
                                     progressDialog.dismiss();
-                                    Log.v("getDownloadUrl onFailure", "faillll");
+                                    Log.v("getDownloadUrl onFail", "faillll");
                                     Toast.makeText(CreatePetPost.this,
                                             "Image failed!",
                                             Toast.LENGTH_SHORT).show();
