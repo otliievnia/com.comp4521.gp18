@@ -1,10 +1,9 @@
 version: '2.1'
 orbs:
   slack: circleci/slack@4.1
-  maven: circleci/maven@1.3.0
   android: circleci/android@2.0.3
 jobs:
-  android-build:
+  android-build-and-lint-test:
     working_directory: ~/code
     docker:
       - image: cimg/android:2021.10.2
@@ -42,7 +41,7 @@ jobs:
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1
-  android-test:
+  android-unit-test:
     executor:
       name: android/android-machine
       resource-class: large
@@ -51,6 +50,51 @@ jobs:
       - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
+      - android/run-tests:
+          test-command: ./gradlew testDebug
+      - run:
+          name: Save test results
+          command: |
+              mkdir -p ~/test-results/junit/
+              find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+      - android/save-gradle-cache
+      - android/save-build-cache
+      - slack/notify:
+          event: fail
+          mentions: '@everyone'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+  android-ui-test:
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: 2021.10.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - android/start-emulator-and-run-tests:
+          test-command: ./gradlew connectedDebugAndroidTest
+          system-image: system-images;android-32;google_apis;x86
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+      - android/save-gradle-cache
+      - android/save-build-cache
       - slack/notify:
           event: fail
           mentions: '@everyone'
@@ -61,7 +105,20 @@ jobs:
 workflows:
   test-and-deploy:
     jobs:
-      - android-build:
+      - android-build-and-lint-test:
           context: 
             - slack
             - google-credential
+      - android-unit-test:
+          context: 
+            - slack
+            - google-credential
+          requires:
+            - android-build-and-lint-test
+      - android-ui-test:
+          context: 
+            - slack
+            - google-credential
+          requires:
+            - android-unit-test
+
