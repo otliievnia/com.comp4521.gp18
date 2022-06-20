@@ -2,6 +2,7 @@ version: '2.1'
 orbs:
   slack: circleci/slack@4.1
   android: circleci/android@2.0.3
+  github-cli: circleci/github-cli@2.1.0
 commands:
   put-google-services-json:
     steps:
@@ -117,6 +118,31 @@ jobs:
             ./gradlew assembleRelease
       - store_artifacts:
           path: app/build/outputs/apk/release
+  github-release:
+    docker:
+      - image: 'cimg/base:stable'
+    parameters:
+      repo:
+        description: |
+          Name of the App repo
+        type: string
+      tag:
+        type: string
+        default: '$CIRCLE_TAG'
+    steps:
+      - checkout
+      - put-google-services-json
+      - gh/install
+      - github-cli/release:
+          context:
+            - GITHUB_CREDS
+          filters:
+            branches:
+              only:
+                - main
+          tag: '<< parameters.repo >>-<< parameter.tag >>-<< pipeline.number >>'
+          title: The initial release
+        
 workflows:
   test-and-deploy:
     jobs:
@@ -140,4 +166,7 @@ workflows:
           context: 
             - slack
             - google-credential
-
+      - github-release:
+          repo: pet-reunion-app
+          requires:
+            - release-build
