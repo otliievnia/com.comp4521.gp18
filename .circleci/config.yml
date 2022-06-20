@@ -2,6 +2,21 @@ version: '2.1'
 orbs:
   slack: circleci/slack@4.1
   android: circleci/android@2.0.3
+commands:
+  put-google-services-json:
+    steps:
+      - run: "touch ./app/google-services.json"
+      - run: "echo $GOOGLE_CREDENTIAL > ./app/google-services.json"
+      - run: "cat ./app/google-services.json"
+  start-my-slack-noti:
+    steps:
+      - slack/notify:
+          event: fail
+          mentions: '@everyone'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 jobs:
   android-build-and-lint-test:
     working_directory: ~/code
@@ -14,9 +29,7 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run: "touch ./app/google-services.json"
-      - run: "echo $GOOGLE_CREDENTIAL > ./app/google-services.json"
-      - run: "cat ./app/google-services.json"
+      - put-google-services-json
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
@@ -34,13 +47,7 @@ jobs:
           destination: reports
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: app/build/test-results
-      - slack/notify:
-          event: fail
-          mentions: '@everyone'
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+      - start-my-slack-noti
   android-unit-test:
     executor:
       name: android/android-machine
@@ -48,6 +55,7 @@ jobs:
       tag: 2021.10.1
     steps:
       - checkout
+      - put-google-services-json
       - android/restore-gradle-cache
       - android/restore-build-cache
       - android/run-tests:
@@ -64,13 +72,7 @@ jobs:
           path: ~/test-results/junit
       - android/save-gradle-cache
       - android/save-build-cache
-      - slack/notify:
-          event: fail
-          mentions: '@everyone'
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+      - start-my-slack-noti
   android-ui-test:
     executor:
       name: android/android-machine
@@ -78,6 +80,7 @@ jobs:
       tag: 2021.10.1
     steps:
       - checkout
+      - put-google-services-json
       - android/restore-gradle-cache
       - android/restore-build-cache
       - android/start-emulator-and-run-tests:
@@ -95,13 +98,7 @@ jobs:
           path: ~/test-results/junit
       - android/save-gradle-cache
       - android/save-build-cache
-      - slack/notify:
-          event: fail
-          mentions: '@everyone'
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+      - start-my-slack-noti
 workflows:
   test-and-deploy:
     jobs:
