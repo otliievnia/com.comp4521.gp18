@@ -24,7 +24,7 @@ public class PostTest {
     public void getAnimalType() {
         Post post = new Post();
         post.setAnimalType("Dog");
-        assert(post.getAnimalType().equals("123"));
+        assert(post.getAnimalType().equals("Dog"));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class PostTest {
     public void getSex() {
         Post post = new Post();
         post.setSex("Female");
-        assert(post.getSex().equals("65812882"));
+        assert(post.getSex().equals("Female"));
     }
 
     @Test
