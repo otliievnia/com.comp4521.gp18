@@ -156,7 +156,7 @@ workflows:
               only:
                 - main
           tag: '<< parameters.repo >>-<< pipeline.number >>'
-          repo: petReunion
+          repo: 'petReunion'
           title: The initial release
           requires:
             - release-build
