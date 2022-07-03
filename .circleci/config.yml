@@ -118,26 +118,6 @@ jobs:
             ./gradlew assembleRelease
       - store_artifacts:
           path: app/build/outputs/apk/release
-  github-release:
-    docker:
-      - image: 'cimg/base:stable'
-    parameters:
-      repo:
-        description: |
-          Name of the App repo
-        type: string
-    steps:
-      - checkout
-      - put-google-services-json
-      - github-cli/release:
-          context:
-            - GITHUB_CREDS
-          filters:
-            branches:
-              only:
-                - main
-          tag: '<< parameters.repo >>-<< pipeline.number >>'
-          title: The initial release
         
 workflows:
   test-and-deploy:
@@ -162,7 +142,20 @@ workflows:
           context: 
             - slack
             - google-credential
-      - github-release:
-          repo: pet-reunion-app
+      - github-cli/release:
+          parameters:
+            repo:
+              description: |
+                Name of the App repo
+              type: string
+              default: 'petReunion'
+          context:
+            - GITHUB_CREDS
+          filters:
+            branches:
+              only:
+                - main
+          tag: '<< parameters.repo >>-<< pipeline.number >>'
+          title: The initial release
           requires:
             - release-build
