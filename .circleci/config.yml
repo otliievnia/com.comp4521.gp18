@@ -126,11 +126,13 @@ jobs:
         description: |
           Name of the App repo
         type: string
-
+      tag:
+        type: string
+        default: '$CIRCLE_TAG'
     steps:
       - checkout
       - put-google-services-json
-      - gh/install
+      - github-release/install
       - github-cli/release:
           context:
             - GITHUB_CREDS
@@ -138,7 +140,7 @@ jobs:
             branches:
               only:
                 - main
-          tag: '<< parameters.repo >>-<< pipeline.number >>'
+          tag: '<< parameters.repo >>-<< parameter.tag >>-<< pipeline.number >>'
           title: The initial release
         
 workflows:
