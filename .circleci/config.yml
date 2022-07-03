@@ -126,9 +126,6 @@ jobs:
         description: |
           Name of the App repo
         type: string
-      tag:
-        type: string
-        default: '$CIRCLE_TAG'
     steps:
       - checkout
       - put-google-services-json
@@ -140,7 +137,7 @@ jobs:
             branches:
               only:
                 - main
-          tag: '<< parameters.repo >>-<< parameter.tag >>-<< pipeline.number >>'
+          tag: '<< parameters.repo >>-<< pipeline.number >>'
           title: The initial release
         
 workflows:
