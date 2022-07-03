@@ -141,6 +141,8 @@ workflows:
           context: 
             - slack
             - google-credential
+          requires:
+            - android-ui-test
       - github-cli/release:
           context:
             - GITHUB_CREDS
