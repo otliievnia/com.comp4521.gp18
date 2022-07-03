@@ -8,7 +8,6 @@ commands:
     steps:
       - run: "touch ./app/google-services.json"
       - run: "echo $GOOGLE_CREDENTIAL > ./app/google-services.json"
-      - run: "cat ./app/google-services.json"
   start-my-slack-noti:
     steps:
       - slack/notify:
