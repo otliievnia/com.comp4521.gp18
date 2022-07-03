@@ -143,20 +143,13 @@ workflows:
             - slack
             - google-credential
       - github-cli/release:
-          repo: 'petReunion'
-          parameters:
-            repo:
-              description: |
-                Name of the App repo
-              type: string
-              default: 'petReunion'
           context:
             - GITHUB_CREDS
           filters:
             branches:
               only:
                 - main
-          tag: '<< parameters.repo >>-<< pipeline.number >>'
+          tag: 'v1-<< pipeline.number >>'
           title: The initial release
           requires:
             - release-build
