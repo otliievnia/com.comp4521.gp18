@@ -143,6 +143,7 @@ workflows:
             - slack
             - google-credential
       - github-cli/release:
+          repo: 'petReunion'
           parameters:
             repo:
               description: |
@@ -156,7 +157,6 @@ workflows:
               only:
                 - main
           tag: '<< parameters.repo >>-<< pipeline.number >>'
-          repo: 'petReunion'
           title: The initial release
           requires:
             - release-build
