@@ -129,7 +129,7 @@ jobs:
     steps:
       - checkout
       - put-google-services-json
-      - github-release/install
+      - github-cli/install
       - github-cli/release:
           context:
             - GITHUB_CREDS
